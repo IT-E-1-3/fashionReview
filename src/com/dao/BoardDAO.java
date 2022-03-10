@@ -29,17 +29,18 @@ public class BoardDAO {
 		}
 	}
 	
-	public ArrayList<BoardVO> selectAllBoard(String id) {
+	public ArrayList<BoardVO> selectAllBoard() {
 		ArrayList<BoardVO> list = new ArrayList<>();
-		BoardVO board = new BoardVO();
+		
 		try {
 			conn=dataFactory.getConnection();
 			String query="SELECT * from board";
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1,id);
+			
 			rs=pstmt.executeQuery(); 
 			
 			while(rs.next()) {
+				BoardVO board = new BoardVO();
 				board.setUser_id(rs.getString("user_id"));
 				board.setBoard_id(rs.getString("board_id"));
 				board.setTitle(rs.getString("title"));
@@ -49,7 +50,7 @@ public class BoardDAO {
 				
 				
 				list.add(board);
-				System.out.println(board.toString());
+				
 			}
 			
 			rs.close();
@@ -70,16 +71,16 @@ public class BoardDAO {
 			conn=dataFactory.getConnection();
 			
 			
-			pstmt=conn.prepareStatement("insert into board (user_id, title, content, picture,write_date) values(?,?,?,?,sysdate)");
+			pstmt=conn.prepareStatement("insert into board (board_id,user_id, title, content, picture,write_date) values(board_count.nextval,?,?,?,?,sysdate)");
 //			stmt=conn.createStatement();
 		
 			
-			pstmt.setString(1,board.getUser_id() );
-			pstmt.setString(2,  board.getTitle());
-			pstmt.setString(3,  board.getContent());
-			pstmt.setString(4,  board.getPicture());
+			pstmt.setString(1,board.getUser_id());
+			pstmt.setString(2,board.getTitle());
+			pstmt.setString(3,board.getContent());
+			pstmt.setString(4,board.getPicture());
 			
-		
+			
 			pstmt.executeUpdate();
 			conn.commit();
 		
@@ -92,6 +93,84 @@ public class BoardDAO {
 		}catch(Exception e){
             e.printStackTrace();
         }
+	}
+	
+	public BoardVO selectPost(String no) {
+		BoardVO board = new BoardVO();
+		try {
+			conn=dataFactory.getConnection();
+			String query="SELECT * from board where board_id=?";
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, no);
+			
+			rs=pstmt.executeQuery(); 
+			
+			while(rs.next()) {
+				
+				board.setUser_id(rs.getString("user_id"));
+				board.setBoard_id(rs.getString("board_id"));
+				board.setTitle(rs.getString("title"));
+				board.setContent(rs.getString("content"));
+				board.setPicture(rs.getString("picture"));
+				board.setWirte_date(rs.getDate("write_date"));
+				
+			}
+			
+			rs.close();
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return board;
+		
+	}
+
+	public void updatePost(BoardVO board) {
+		
+		try {
+			conn=dataFactory.getConnection();
+			String query="update board set title=?, content=?, write_date=sysdate where board_id=?";
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, board.getTitle());
+			pstmt.setString(2, board.getContent());
+			pstmt.setString(3, board.getBoard_id());
+			
+			pstmt.executeUpdate(); 
+			
+			
+			
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void deletePost(String board_id) {
+		BoardVO board = new BoardVO();
+		try {
+			conn=dataFactory.getConnection();
+			String query="delete from board where board_id=?";
+			pstmt = conn.prepareStatement(query);
+			
+			pstmt.setString(1, board_id);
+			
+			pstmt.executeUpdate(); 
+			
+			
+			
+			pstmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

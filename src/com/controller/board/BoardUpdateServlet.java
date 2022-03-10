@@ -1,8 +1,9 @@
 package com.controller.board;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,18 +13,19 @@ import javax.servlet.http.HttpSession;
 
 import com.dao.BoardDAO;
 import com.vo.BoardVO;
+import com.vo.UserVO;
 
 /**
- * Servlet implementation class SelectServlet
+ * Servlet implementation class BoardUpdateServlet
  */
-@WebServlet("/boardSelect")
-public class SelectServlet extends HttpServlet {
+@WebServlet("/updatePost")
+public class BoardUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectServlet() {
+    public BoardUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,19 +42,25 @@ public class SelectServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-//		HttpSession session = request.getSession();
-//		ArrayList<BoardVO> list = new ArrayList<>();
-//		
-//		request.setCharacterEncoding("UTF-8");
-//		response.setContentType("text/html; charset=UTF-8");
-//		
-//		BoardVO board = new BoardVO();
-//		BoardDAO boardDAO = new BoardDAO();
-//		
-//		list = boardDAO.selectAllBoard();
-		
-		
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+	    
+	    String board_id = request.getParameter("board_id");
+	    BoardVO board = new BoardVO();
+	    BoardDAO boardDAO = new BoardDAO();
+	    
+	    board.setBoard_id(board_id);
+	    board.setContent(request.getParameter("content"));
+	    board.setTitle(request.getParameter("title"));
+	    
+	    boardDAO.updatePost(board);
+	   
+	    
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("boardList.jsp");
+	    dispatcher.forward(request, response);
+			    
 	}
 
 }

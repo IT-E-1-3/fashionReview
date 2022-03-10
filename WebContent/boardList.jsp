@@ -1,3 +1,19 @@
+<%@ page language="java"   contentType="text/html; charset=UTF-8"
+     import="java.util.*,com.dao.*,com.vo.*" 
+    pageEncoding="UTF-8"%>
+    
+ <%
+ 	request.setCharacterEncoding("UTF-8");
+ 
+ 	String id = (String)session.getAttribute("id");
+ 	
+ 	BoardVO board = new BoardVO();
+ 	BoardDAO boardDAO = new BoardDAO();
+ 	ArrayList<BoardVO> boardList = boardDAO.selectAllBoard();
+ 	
+
+ 	
+ %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -35,8 +51,7 @@ text-align: right;
 </style>
 
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"  import="com.*, java.util.List" %>
+
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page session="true" %> <!-- 현재 페이지를 세션에 추가해줌 -->
@@ -62,7 +77,7 @@ text-align: right;
 
 </head>
 <body>
-<% String id = (String)session.getAttribute("id"); %>
+
   <nav class="d-flex fixed-top align-items-center justify-content-between navbar navbar-expand-md navbar-dark bg-dark fixed-top ">
     <a href="02_home.html"><img  src="./images/logo.png"   height="50px" alt=""></img></a>
     <div class="me-2">
@@ -82,7 +97,7 @@ text-align: right;
 
     <!-- Board -->
 <br><br>
-                                 <center>
+                           
     <div class="searchDiv" >
           <select id="searchType" style="height:43px">       
              <option value="title">제목</option>
@@ -101,17 +116,17 @@ text-align: right;
 
           </thead>
              <tbody>
-                 <tr>
-                   <c:forEach items="${boardList}" var="article">
+               
+          <%for(BoardVO boardVO:boardList) {%>
              <tr>
-         <td>${article.no }</td>
-         <td><a href="viewArticle?no=${article.no }">${article.title }</a></td>
-         <td>${article.id }</td>
-         <td><fmt:formatDate pattern="yyyy/MM/dd" value="${article.writeDate }"/></td>
+         <td><%= boardVO.getBoard_id() %></td>
+         <td><a href="viewArticle.jsp?no=<%= boardVO.getBoard_id() %>"><%=boardVO.getTitle() %></a></td>
+         <td><%=boardVO.getUser_id() %></td>
+         <td><fmt:formatDate pattern="yyyy/MM/dd" value="<%=boardVO.getWirte_date() %>"/></td>
             </tr>
-               </c:forEach>
+          <%} %>
 
-               </tr>
+             
           </tbody>
         </table> 
       </div>
@@ -124,12 +139,12 @@ text-align: right;
          
          <li><a href="boardWriteForm.jsp"  class="btn btn-secondary btn-lg">글 작성하러 가기</a></li>
          
-      </ui>         
+      </ul>         
    </nav>
 
   </footer>
 </section>   
-</center>
+
  </div>
 </div>
 	

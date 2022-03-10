@@ -31,19 +31,12 @@
 
 .container{
   position:absolute;
-
-  border:1px solid red;
+  width:100%;
+  height:100%;
   text-align: center;
 }
-.logindiv{
-	position:relative;
-	width:250px;
-	height:200px;
-	border:1px solid red;
-	align-items: center;
-	align-content:center;
-  	justify-content:center;
-  	text-align: center;
+.loginDiv{
+	margin-top:15%;
 }
 
 
@@ -54,18 +47,18 @@
 <body>
 
 <div class='container'>
-	
+	<div class='loginDiv'>
       <h1>Login Page</h1>
 <article>
 	<form action="login" method="post">
 		I D : <input type="text" name="id" /><br/>
-		PW: <input type="password" name="pw" /><br/>
+		PW: <input type="password" name="pw" />
 		<input class="btn" type="submit" value="login"/>		
 	</form>
-	<button class="btn" onclick='window.open("memberInsert.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=2200,width=500,height=800");'>회원가입</button>
+		<button class="btn" onclick='window.open("memberInsert.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=2200,width=500,height=800");'>회원가입</button>
 	
 </article>
-   
+   </div>
  
 </div>
 </body>

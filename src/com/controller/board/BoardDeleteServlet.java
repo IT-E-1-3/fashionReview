@@ -1,8 +1,8 @@
 package com.controller.board;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,16 +14,16 @@ import com.dao.BoardDAO;
 import com.vo.BoardVO;
 
 /**
- * Servlet implementation class SelectServlet
+ * Servlet implementation class BoardDeleteServlet
  */
-@WebServlet("/boardSelect")
-public class SelectServlet extends HttpServlet {
+@WebServlet("/deletePost")
+public class BoardDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectServlet() {
+    public BoardDeleteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,19 +40,22 @@ public class SelectServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-//		HttpSession session = request.getSession();
-//		ArrayList<BoardVO> list = new ArrayList<>();
-//		
-//		request.setCharacterEncoding("UTF-8");
-//		response.setContentType("text/html; charset=UTF-8");
-//		
-//		BoardVO board = new BoardVO();
-//		BoardDAO boardDAO = new BoardDAO();
-//		
-//		list = boardDAO.selectAllBoard();
-		
-		
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+	    
+	    String board_id = request.getParameter("board_id");
+	    BoardVO board = new BoardVO();
+	    BoardDAO boardDAO = new BoardDAO();
+	    
+	    
+	    
+	    boardDAO.deletePost(board_id);
+	   
+	    
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("boardList.jsp");
+	    dispatcher.forward(request, response);
 	}
 
 }

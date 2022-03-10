@@ -23,7 +23,9 @@
 <html lang="ko">
 <head>
    <meta charset="UTF-8" />
-   <% request.setCharacterEncoding("UTF-8"); %>
+   <% request.setCharacterEncoding("UTF-8");
+  
+   %>
     <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
    <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
 
@@ -108,7 +110,7 @@
                     </div>
 
                     <div class="button-get-started">
-                        <a href="boardList.jsp" target="_blank" class="btn btn-white btn-fill btn-lg ">
+                        <a href="boardList.jsp" class="btn btn-white btn-fill btn-lg ">
                             착샷 보러 가기
                         </a>
                     </div>
