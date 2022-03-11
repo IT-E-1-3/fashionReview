@@ -12,7 +12,7 @@
   align-content:center;
   justify-content:center;
   text-align: center;
-  width:100px;
+  width:80%;
   height:40px;
   background: linear-gradient(125deg,#81ecec,#6c5ce7,#81ecec);
   background-position: left;
@@ -31,19 +31,21 @@
 
 .container{
   position:absolute;
-
-  border:1px solid red;
+  width:100%;
+  height:100%;
   text-align: center;
+  justify-content:center;
+  align-item:center;
+  background-color:lightgray;
 }
-.logindiv{
-	position:relative;
-	width:250px;
-	height:200px;
-	border:1px solid red;
-	align-items: center;
-	align-content:center;
-  	justify-content:center;
-  	text-align: center;
+.loginDiv{
+	background-color:white;
+	margin-top:50px;
+    height:90%;
+    text-algin:center;
+	width:20%;
+	margin-left:40%;
+	box-shadow: 2px 3px 5px 0px;
 }
 
 
@@ -54,18 +56,21 @@
 <body>
 
 <div class='container'>
-	
-      <h1>Login Page</h1>
+	<div class='loginDiv'>
+	 <h1 style="padding-top:5%">Fasion <br>Informatio<br> Platform</h1>
+      <img src='assets/img/logo.png' height='30%' width='70%' >
+      <h5>Fashion is what you make of it!</h5> <br/>
+      
+      
 <article>
 	<form action="login" method="post">
 		I D : <input type="text" name="id" /><br/>
-		PW: <input type="password" name="pw" /><br/>
-		<input class="btn" type="submit" value="login"/>		
-	</form>
-	<button class="btn" onclick='window.open("memberInsert.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=2200,width=500,height=800");'>회원가입</button>
-	
+		PW: <input type="password" name="pw" /><br/><br/>
+		<input class="btn" type="submit" value="login"/>	
+	</form><br/>	
+		<button class="btn" onclick='window.open("memberInsert.html", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=2200,width=500,height=800");'>회원가입</button>
 </article>
-   
+   </div>
  
 </div>
 </body>

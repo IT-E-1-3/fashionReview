@@ -79,9 +79,15 @@ text-align: right;
 </style>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.*"%>
+    pageEncoding="UTF-8" import="com.dao.*,com.vo.*"%>
 <%@ page session="true" %> 
-<% String ids = (String) session.getAttribute("id"); %> 
+<% String ids = (String) session.getAttribute("id"); 
+
+	BoardVO board = new BoardVO();
+	BoardDAO boardDAO = new BoardDAO();
+	board = boardDAO.selectPost(request.getParameter("no"));
+	
+%> 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -187,24 +193,32 @@ $(document).ready(function(){
   <!-- 03_community.html -->
 <div class="main">
   <div class="main-container">
-	<h2  style="text-align:center">${article.id }님의 게시글</h2>
+	<h2  style="text-align:center"><%=board.getUser_id()%>님의 게시글</h2>
 <br>	
 <br>
 
+<form action="updatePost" method="post">
 <table class="table table-striped" style="text-align: center; border: 1px solid #dddddd">
-	<tr><td>아이디</td><td><input value="${article.id }"  readonly style="background:lightgray"></td></tr>
-	<tr><td>제목</td><td><input  value="${article.title }" readonly style="background:lightgray"></td></tr>
+	<tr><td>아이디</td><td><input type="text" value="<%=board.getUser_id() %>" name="user_id" readonly></td></tr>
+	<tr><td>제목</td><td><input value="<%=board.getTitle() %>" name="title"></td></tr>
 
-	<tr><td>내용</td><td><textarea rows ="8" cols="10" readonly style="background:lightgray" >${article.content}</textarea></td></tr>
+	<tr><td>내용</td><td><input  style="height:100px" value="<%=board.getContent() %>" name="content" ></td></tr>
 	<tr><td>첨부파일</td><td><div id="div1" class="div"><a href="getImg/${article.fileName }"><img src="getImg/${article.fileName }" height="50"></a></div></td><tr>
 
 
 
 </table>
+		 <input type='hidden' value="<%=board.getBoard_id() %>" name="board_id">
+
 		<div class="articleDiv">
-		<input type="submit" id="updateBtn"style="background-color:#8E44AD"  class="btn btn-secondary" value="수정">
+		<input type="submit" id="updateBtn"  class="btn btn-secondary" value="수정">
 		 &nbsp;
-		  <button style="background-color:#8E44AD"   class="btn btn-secondary"id="deleteBtn">삭제</button>
+		 </form>
+		 <form action="deletePost" method="post">
+		 <input type='hidden' value="<%=board.getBoard_id() %>" name="board_id">
+		  <input type="submit" class="btn btn-secondary" value="삭제">
+	   </form>
+	   </div>
 	   </div>
 <br><br>
 </div>
@@ -240,7 +254,7 @@ $(document).ready(function(){
                <input type="hidden" name="bno" value="${article.no}"/>              
                <input type="text" class="form-control" id="content" name="content" placeholder="댓글을 입력해주세요.">
                <span class="input-group-btn">
-                    <button class="btn btn-dark" style="background-color:#8E44AD"  type="button" id="commentInsertBtn">등록</button>
+                    <button class="btn btn-dark" id="commentInsertBtn">등록</button>
                </span>
               </div>
 			<div class="commentList" id="commentList"></div>
@@ -252,7 +266,7 @@ $(document).ready(function(){
 <footer>
 	 <nav aria-label="Page navigation example" class="d-flex justify-content-around mt-3 "> 		 	
  		  <ul class="pagination">		
-			<li><button type="button" style="background-color:#8E44AD" class="btn btn-secondary btn-lg" onclick="history.back()">목록으로 가기</button></li>		
+			<li><button type="button" class="btn btn-secondary btn-lg" href="boardList.jsp">목록으로 가기</button></li>		
 		</ui>			
 	</nav>
 </footer>
