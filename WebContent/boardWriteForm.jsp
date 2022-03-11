@@ -113,8 +113,17 @@ $(document).ready(function(){
          </td></tr>
          <tr><td>내용</td><td><textarea rows ="8" cols="20" name="content" id="content"></textarea></td></tr>
          <tr><td>파일첨부</td><td><input type="file" name="file"></td><tr>
-      
-      
+      	 <tr>
+            <td>카테고리</td>
+         <td>
+            <label><input type="checkbox" name="category" value="top" checked> 상의</label>
+           <label><input type="checkbox" name="category" value="bottom"> 하의</label>
+           <label><input type="checkbox" name="category" value="shoes"> 신발</label>
+           <label><input type="checkbox" name="category" value="Accessories"> 악세사리</label>
+         </td>
+         </tr>
+      	 
+      		
       </table>
    </div>
 <footer>
@@ -122,7 +131,7 @@ $(document).ready(function(){
        <ul class="pagination">
       
             <li><input type="submit" value="작성" id="writeBtn"   class="btn btn-secondary"></li>
-            <li> <p onclick="location='boardList.jsp'" class="btn btn-secondary">목록</p></li>
+            <li> <input type="button" onclick="location='boardList.jsp'" class="btn btn-secondary" value="목록"></li>
          
       </ui>         
    </nav>

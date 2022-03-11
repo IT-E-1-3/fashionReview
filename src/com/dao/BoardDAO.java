@@ -71,7 +71,7 @@ public class BoardDAO {
 			conn=dataFactory.getConnection();
 			
 			
-			pstmt=conn.prepareStatement("insert into board (board_id,user_id, title, content, picture,write_date) values(board_count.nextval,?,?,?,?,sysdate)");
+			pstmt=conn.prepareStatement("insert into board (board_id,user_id, title, content, picture,category,write_date) values(board_count.nextval,?,?,?,?,?,sysdate)");
 //			stmt=conn.createStatement();
 		
 			
@@ -79,7 +79,7 @@ public class BoardDAO {
 			pstmt.setString(2,board.getTitle());
 			pstmt.setString(3,board.getContent());
 			pstmt.setString(4,board.getPicture());
-			
+			pstmt.setString(5, board.getCategory());
 			
 			pstmt.executeUpdate();
 			conn.commit();

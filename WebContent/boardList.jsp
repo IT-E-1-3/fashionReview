@@ -78,13 +78,16 @@ text-align: right;
 </head>
 <body>
 
-  <nav class="d-flex fixed-top align-items-center justify-content-between navbar navbar-expand-md navbar-dark bg-dark fixed-top ">
-    <a href="02_home.html"><img  src="./images/logo.png"   height="50px" alt=""></img></a>
-    <div class="me-2">
-      <div class="collapse navbar-collapse" id="navbarNav">
+  <nav class="d-flex fixed-top align-items-center justify-content-between navbar navbar-expand-md fixed-top " style="background-color:lightgray">
+    <div style="display:flex; flex-direction:horizontal">
+	    <img src='assets/img/logo.png'   height="50px" width="50px"style="margin-left:10px; margin-right:10px"></img>
+	    <h1 >Community <i  class="fas fa-bullhorn fa-x"></i></h1>
+    </div>
+    <div class="me-2 ">
+       <div class="collapse navbar-collapse" id="navbarNav">
          <ul class="navbar-nav">
           <li class="nav-item">
-            <div class="nav-link text-white"  id='loginOK'>   <a href="scrapList" style="background-color:lightgrey" class="a_style btn btn-light"> <%=id %>님의 ScrapBox</a></div>
+            <div class="nav-link text-white"  id='loginOK'>   <a href="postAnalysis.jsp" style="background-color:lightgrey" class="a_style btn btn-light"> <%=id %>님의 ScrapBox</a></div>
           </li>
         </ul>
       </div>
@@ -92,13 +95,29 @@ text-align: right;
   </nav> 
   <!-- 03_community.html -->
   <div class="main">
+   
   <div class="main-container">
-    <h1>Community <i class="fas fa-bullhorn fa-x"></i></h1>
-
+    
+<aside class="row row-cols-lg-1 mt-5">
+      <ul class="list-group">
+        <li class="list-group-item text-primary col-lg-12">
+          <a href="#" class="a_style">상의</a>
+        </li>
+        <li class="list-group-item text-primary col-lg-12">
+          <a href="#" class="a_style">하의</a>
+        </li>
+        <li class="list-group-item text-primary col-lg-12">
+          <a href="#" class="a_style">신발</a> 
+        </li>
+        <li class="list-group-item text-primary col-lg-12">
+          <a href="#" class="a_style">악세사리</a>
+        </li>
+      </ul>
+    </aside>
     <!-- Board -->
 <br><br>
                            
-    <div class="searchDiv" >
+    <div class="searchDiv" style="margin-top:50px" >
           <select id="searchType" style="height:43px">       
              <option value="title">제목</option>
              <option value="id">아이디</option>
@@ -142,6 +161,19 @@ text-align: right;
       </ul>         
    </nav>
 
+
+      <nav aria-label="Page navigation example" class="d-flex justify-content-around mt-3">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item"><a class="page-link" href="#">Next</a></li>
+        </ul>
+      </nav>
+    </section>
+  </div>
+  
   </footer>
 </section>   
 

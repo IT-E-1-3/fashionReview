@@ -23,7 +23,7 @@ import com.vo.BoardVO;
  */
 @WebServlet("/boardWrite")
 public class WriteServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -33,40 +33,48 @@ public class WriteServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
+   /**
+    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+    */
+   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // TODO Auto-generated method stub
+      response.getWriter().append("Served at: ").append(request.getContextPath());
+   }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		HttpSession session = request.getSession();  
-		
-		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html;charset=UTF-8");
-		
-	    BoardVO board = new BoardVO();
-	    board.setUser_id(request.getParameter("user_id"));
-		board.setTitle(request.getParameter("title"));
-		board.setContent(request.getParameter("content"));
-		board.setPicture(request.getParameter("file"));
-		
-		System.out.println(board.toString());
-	    
-	    	    
-	    BoardDAO boardDAO = new BoardDAO();
-	    boardDAO.insertPost(board);
-		System.out.println("post에서 등록 완료");
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("boardList.jsp");
-	    dispatcher.forward(request, response);
-	}
+   /**
+    * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+    */
+   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      
+      
+      HttpSession session = request.getSession();  
+      
+      request.setCharacterEncoding("UTF-8");
+      response.setContentType("text/html;charset=UTF-8");
+      
+       BoardVO board = new BoardVO();
+       board.setUser_id(request.getParameter("user_id"));
+      board.setTitle(request.getParameter("title"));
+      board.setContent(request.getParameter("content"));
+      board.setPicture(request.getParameter("file"));
+      
+      String[] categories=request.getParameterValues("category");
+      
+      board.setCategory(categories);
+      
+      for(String temp:categories) {
+         System.out.println(temp);
+      }
+      
+      System.out.println(board.toString());
+       
+              
+       BoardDAO boardDAO = new BoardDAO();
+       boardDAO.insertPost(board);
+      System.out.println("post에서 등록 완료");
+      
+      RequestDispatcher dispatcher = request.getRequestDispatcher("boardWriteForm.jsp");
+       dispatcher.forward(request, response);
+   }
 
 }
