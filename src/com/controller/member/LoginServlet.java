@@ -52,8 +52,10 @@ public class LoginServlet extends HttpServlet {
 	    
 	    UserDAO userDAO=UserDAO.getInstance();    
 	    //테이블에 유저 있는지 확인
-	    UserVO userVO = new UserVO();
-	    userVO=userDAO.getUser(id);
+	    UserVO userVO = userDAO.getUser(id);
+	    
+//	    UserVO userVO = new UserVO();
+//	    userVO=userDAO.getUser(id);
 	    System.out.println(userVO.getId());
 	    if( userVO!=null){ //null이 아닐때 mainPage.jsp로 이동
 	        if(userVO.getPw().equals(pw)){ //��ȣ Ȯ��   

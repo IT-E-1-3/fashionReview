@@ -5,8 +5,8 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
 	
 
 	UserVO user =  new UserVO();
-	UserDAO  userDAO=new UserDAO();
-	user = userDAO.getUser(id);	
+	UserDAO  userDAO=UserDAO.getInstance();
+	user = userDAO.getUserAll(id);	
 
 
 %>
@@ -71,31 +71,39 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
             <form action="memberUpdate" method="post">
                <p>
                   <label>ID : <%= user.getId() %></label> 
-                  <input class="w3-input" type="text" id="id" name="id" readonly value=" <%= user.getId() %>"> 
+                  <input class="w3-input" type="text" id="id" name="id" readonly value="<%= user.getId() %>"> 
                </p>
                <p>
-                  <label>pw : <%= user.getPw() %></label> 
+                  <label>Pw : <%= user.getPw() %></label> 
                   <input class="w3-input" type="text" id="pw" name="pw"  value="<%= user.getPw() %>"> 
                </p>
                <p>
-                  <label>email : <%= user.getEmail() %></label> 
+                  <label>Name : <%= user.getName() %></label> 
+                  <input class="w3-input" type="text" id="name" name="name"  value="<%= user.getName() %>"> 
+               </p>
+               <p>
+                  <label>Email : <%= user.getEmail() %></label> 
                   <input class="w3-input" type="text" id="email" name="email"  value="<%= user.getEmail() %>"> 
                </p>
                <p>
-                  <label>age : <%= user.getAge() %></label> 
-                  <input class="w3-input" type="number" id="age" name="age"  value="<%= user.getAge() %>"> 
+                  <label>Phone : <%= user.getPhone() %></label> 
+                  <input class="w3-input" type="text" id="phone" name="phone"  value="<%= user.getPhone() %>"> 
                </p>
                <p>
-                  <label>gender : <%= user.getGender() %></label> 
+                  <label>Age : <%= user.getAge() %></label> 
+                  <input class="w3-input" type="text" id="age" name="age"  value="<%= user.getAge() %>"> 
+               </p>
+               <p>
+                  <label>Gender : <%= user.getGender() %></label> 
                   <input class="w3-input" type="text" id="gender" name="gender"  value="<%= user.getGender() %>"> 
                </p>
                <p>
-                  <label>height : <%= user.getHeight() %></label> 
-                  <input class="w3-input" type="number" id="height" name="height"  value="<%= user.getHeight() %>"> 
+                  <label>Height : <%= user.getHeight() %></label> 
+                  <input class="w3-input" type="text" id="height" name="height"  value="<%= user.getHeight() %>"> 
                </p>
                <p>
-                  <label>weight : <%= user.getWeight() %></label> 
-                  <input class="w3-input" type="number" id="weight" name="weight" value="<%= user.getWeight() %>"> 
+                  <label>Weight : <%= user.getWeight() %></label> 
+                  <input class="w3-input" type="text" id="weight" name="weight" value="<%= user.getWeight() %>"> 
                </p>
               
                <p class="w3-center">
