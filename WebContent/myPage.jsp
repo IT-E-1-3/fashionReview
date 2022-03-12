@@ -5,8 +5,8 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
 	
 
 	MemberShipVO m =  new MemberShipVO();
-	MemberShipDAO  membershipDAO=new MemberShipDAO();
-	ArrayList<MemberShipVO> membership = membershipDAO.selectMemberShip(id);	
+	MemberShipDAO  membershipDAO = MemberShipDAO.getInstance();
+	m = membershipDAO.getMemberShipALL(id);	
 
 
 %>
@@ -48,7 +48,7 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
 </head>
 <body>
 	<%
-	   if(membership.size()==0){
+	   if(m==null||m.equals("")){
 	%>
 	  
 	<p align="center">
@@ -60,8 +60,7 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
 	  
 	  <%
 	}else{
-	   for( int i = 0; i < membership.size(); i++ ) {
-	      MemberShipVO member = (MemberShipVO) membership.get(i);
+	   
 	%>
    <div class="w3-content w3-container w3-margin-top">
       <div class="w3-container w3-card-4">
@@ -71,19 +70,19 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
          <div>
             
                <p>
-                  <label>멤버쉽 등급 : <%= member.getGrade() %></label> 
-                  <input class="w3-input" type="text" id="id" name="id" readonly value="${ member.id }"> 
+                  <label>멤버쉽 등급 : <%= m.getGrade() %></label> 
+                  <input class="w3-input" type="text" id="id" name="id" readonly value="<%= m.getGrade() %>"> 
                </p>
                <p>
-                  <label>멤버쉽 포인트 : <%= member.getPoint() %></label> 
-                  <input class="w3-input" type="text" id="email" name="email" value="${ member.email }" required> 
+                  <label>멤버쉽 포인트 : <%= m.getPoint() %></label> 
+                  <input class="w3-input" type="text" id="email" name="email" value=<%= m.getPoint() %> required> 
                </p>
             
             <br />
            
      
                <p>
-                  <label>작성한 게시글 수 : <%= member.getPost_count() %></label>
+                  <label>작성한 게시글 수 : <%= m.getPost_count() %></label>
                   <input class="w3-input" id="old_pw" name="old_pw" type="text" required>
                </p>
                <p>
@@ -99,7 +98,7 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
                   <p class="w3-center">
                   <button type="submit" class="btn">메인화면</button>
                </p>
-               <%}}%>
+               <%}%>
             
          </div>
       </div>
