@@ -66,20 +66,19 @@ public class BoardVO {
 	
 	public void setCategory(String[] category) {
         this.category="";
-        for(int i=0;i<category.length;i++) {
+        for(int i=0;i<category.length; i++) {
+           this.category += (category[i]+",");
            System.out.println(this.category);
-           this.category += category[i];
            
            
         }
 
 }
-	
+
 	@Override
 	public String toString() {
 		return "BoardVO [board_id=" + board_id + ", user_id=" + user_id + ", title=" + title + ", content=" + content
-				+ ", picture=" + picture + ", wirte_date=" + wirte_date + "]";
+				+ ", picture=" + picture + ", category=" + category + ", wirte_date=" + wirte_date + "]";
 	}
-	
 	
 }

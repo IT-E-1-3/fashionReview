@@ -5,11 +5,24 @@
  <%
  	request.setCharacterEncoding("UTF-8");
  
+ 	
  	String id = (String)session.getAttribute("id");
  	
- 	BoardVO board = new BoardVO();
+ 	BoardVO board = new BoardVO(); 	
  	BoardDAO boardDAO = new BoardDAO();
- 	ArrayList<BoardVO> boardList = boardDAO.selectAllBoard();
+ 	String check = (String)session.getAttribute("category");
+ 	
+ 	ArrayList<BoardVO> boardList =new ArrayList<>();
+ 	
+ 	if(check==null || check.equals("")){
+ 		boardList = boardDAO.selectAllBoard();	
+ 	}else{
+ 		boardList = (ArrayList<BoardVO>)session.getAttribute("boardList");
+ 		for(BoardVO temp:boardList){
+ 			System.out.println("temp "+temp.toString());
+ 		}
+ 	}
+ 	
  	
 
  	
@@ -98,26 +111,23 @@ text-align: right;
    
   <div class="main-container">
     
-<aside class="row row-cols-lg-1 mt-5">
-      <ul class="list-group">
-        <li class="list-group-item text-primary col-lg-12">
-          <a href="#" class="a_style">상의</a>
-        </li>
-        <li class="list-group-item text-primary col-lg-12">
-          <a href="#" class="a_style">하의</a>
-        </li>
-        <li class="list-group-item text-primary col-lg-12">
-          <a href="#" class="a_style">신발</a> 
-        </li>
-        <li class="list-group-item text-primary col-lg-12">
-          <a href="#" class="a_style">악세사리</a>
-        </li>
-      </ul>
-    </aside>
+
     <!-- Board -->
 <br><br>
+
                            
     <div class="searchDiv" style="margin-top:50px" >
+    <aside class="row row-cols-lg-1 mt-5" style="float:left">
+        <form method="post" action="selectCategory">
+        <div>
+           <label><input type="checkbox" name="choice" value="top"> 상의</label>
+           <label><input type="checkbox" name="choice" value="bottom"> 하의</label>
+           <label><input type="checkbox" name="choice" value="shoes"> 신발</label>
+           <label><input type="checkbox" name="choice" value="Accessories"> 악세사리</label>
+           <input type="submit" value="선택"/>
+         </div>
+         </form>
+    </aside>
           <select id="searchType" style="height:43px">       
              <option value="title">제목</option>
              <option value="id">아이디</option>
