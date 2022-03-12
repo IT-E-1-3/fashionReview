@@ -3,7 +3,6 @@ package com.controller.member;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,29 +46,26 @@ public class UpdateServlet extends HttpServlet {
 	    response.setContentType("text/html; charset=UTF-8");
 	    String id=request.getParameter("id");
 	    
-	    UserDAO userDAO = new UserDAO();
-	    
+	    UserDAO userDAO = UserDAO.getInstance();
+	    	    
 	    UserVO userVO = new UserVO();    
 	    userVO.setId(request.getParameter("id"));
 	    userVO.setPw(request.getParameter("pw"));
+	    userVO.setName(request.getParameter("name"));
 	    userVO.setEmail(request.getParameter("email"));
 	    userVO.setPhone(request.getParameter("phone"));
 	    userVO.setAge(Integer.parseInt(request.getParameter("age")));
 	    userVO.setGender(request.getParameter("gender"));
 	    userVO.setHeight(Integer.parseInt(request.getParameter("height")));
 	    userVO.setWeight(Integer.parseInt(request.getParameter("weight")));
-	    
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-	    dispatcher.forward(request, response);
 	    try {
 	    	System.out.println("id: "+id);
-			userDAO.UpdateUser(userVO);
+			userDAO.updateUser(userVO);
 			System.out.println("post업데이트 완료");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	    
 	    
 	}
 

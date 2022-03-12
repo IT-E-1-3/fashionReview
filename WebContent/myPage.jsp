@@ -1,13 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"   
 import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
+
 <%
 	String id = (String)session.getAttribute("id"); 
 	
+	MemberShipDAO  membershipDAO=MemberShipDAO.getInstance();
 
-	MemberShipVO m =  new MemberShipVO();
-	MemberShipDAO  membershipDAO=new MemberShipDAO();
-	ArrayList<MemberShipVO> membership = membershipDAO.selectMemberShip(id);	
-
+	MemberShipVO membership = new MemberShipVO();
+	membership = membershipDAO.getMemberShipALL(id);
+	
+	ArrayList<MemberShipVO> rankers = new ArrayList<MemberShipVO>();
+	rankers = membershipDAO.selectTopPostRankers();
 
 %>
 <!DOCTYPE html>
@@ -48,7 +51,7 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
 </head>
 <body>
 	<%
-	   if(membership.size()==0){
+	   if(id==null || id.equals("")){
 	%>
 	  
 	<p align="center">
@@ -60,8 +63,7 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
 	  
 	  <%
 	}else{
-	   for( int i = 0; i < membership.size(); i++ ) {
-	      MemberShipVO member = (MemberShipVO) membership.get(i);
+
 	%>
    <div class="w3-content w3-container w3-margin-top">
       <div class="w3-container w3-card-4">
@@ -71,19 +73,16 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
          <div>
             
                <p>
-                  <label>멤버쉽 등급 : <%= member.getGrade() %></label> 
-                  <input class="w3-input" type="text" id="id" name="id" readonly value="${ member.id }"> 
+                  <label>멤버쉽 등급 : <%= membership.getGrade() %></label> 
+                  <input class="w3-input" type="text" id="id" name="id" readonly value="<%= membership.getGrade() %>">  
                </p>
-               <p>
-                  <label>멤버쉽 포인트 : <%= member.getPoint() %></label> 
-                  <input class="w3-input" type="text" id="email" name="email" value="${ member.email }" required> 
-               </p>
+
             
             <br />
            
      
                <p>
-                  <label>작성한 게시글 수 : <%= member.getPost_count() %></label>
+                  <label>작성한 게시글 수 : <%= membership.getPost_count() %></label>
                   <input class="w3-input" id="old_pw" name="old_pw" type="text" required>
                </p>
                <p>
@@ -99,8 +98,14 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
                   <p class="w3-center">
                   <button type="submit" class="btn">메인화면</button>
                </p>
-               <%}}%>
-            
+               
+           <%
+              for( int i = 0; i < rankers.size(); i++ ) {
+			      MemberShipVO member = (MemberShipVO) rankers.get(i);
+			      System.out.println(member);
+              }
+			%>
+               <%}%>
          </div>
       </div>
    </div>

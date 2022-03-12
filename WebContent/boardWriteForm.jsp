@@ -116,7 +116,7 @@ $(document).ready(function(){
       	 <tr>
             <td>카테고리</td>
          <td>
-            <label><input type="checkbox" name="category" value="top" checked> 상의</label>
+           <label><input type="checkbox" name="category" value="top" checked> 상의</label>
            <label><input type="checkbox" name="category" value="bottom"> 하의</label>
            <label><input type="checkbox" name="category" value="shoes"> 신발</label>
            <label><input type="checkbox" name="category" value="Accessories"> 악세사리</label>
