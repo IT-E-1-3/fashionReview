@@ -20,7 +20,11 @@ import com.vo.MemberShipVO;
 import com.vo.UserVO;
 
 import oracle.jdbc.OracleTypes;
+
 import com.controller.DBmanager.*;
+
+
+
 
 public class MemberShipDAO {
 	private Connection conn;
@@ -85,38 +89,38 @@ public class MemberShipDAO {
 	}
 	
 	// TOP 3 view
-	public ArrayList<MemberShipVO> selectTopPostRankers() {
-		ArrayList<MemberShipVO> rankerList = new ArrayList<MemberShipVO>();
-		try {
-
-			// sql --> table --> view
-			String query = "SELECT * from v_1";
-			System.out.println(query);
-			// DHCP
-			conn = DBManager.getConnection();
-			pstmt = conn.prepareStatement(query);
-			ResultSet rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				String user_id = rs.getString("c_1");
-				String grade = rs.getString("c_2");
-				int post_count = rs.getInt("c_3");
-				int m_point = rs.getInt("c_4");
-				
-				MemberShipVO ranker = new MemberShipVO();
-				ranker.setId(user_id);
-				ranker.setGrade(grade);
-				ranker.setPost_count(post_count);
-				ranker.setPoint(m_point);
-
-				rankerList.add(ranker);
-			} // end while
-			rs.close();
-			pstmt.close();
-			conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} // end try
-		return rankerList;
-	}// end
+//	public ArrayList<MemberShipVO> selectTopPostRankers() {
+//		ArrayList<MemberShipVO> rankerList = new ArrayList<MemberShipVO>();
+//		try {
+//
+//			// sql --> table --> view
+//			String query = "SELECT * from v_1";
+//			System.out.println(query);
+//			// DHCP
+//			conn = DBManager.getConnection();
+//			pstmt = conn.prepareStatement(query);
+//			ResultSet rs = pstmt.executeQuery();
+//			
+//			while (rs.next()) {
+//				String user_id = rs.getString("c_1");
+//				String grade = rs.getString("c_2");
+//				int post_count = rs.getInt("c_3");
+//				int m_point = rs.getInt("c_4");
+//				
+//				MemberShipVO ranker = new MemberShipVO();
+//				ranker.setId(user_id);
+//				ranker.setGrade(grade);
+//				ranker.setPost_count(post_count);
+//				ranker.setPoint(m_point);
+//
+//				rankerList.add(ranker);
+//			} // end while
+//			rs.close();
+//			pstmt.close();
+//			conn.close();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} // end try
+//		return rankerList;
+//	}// end
 }

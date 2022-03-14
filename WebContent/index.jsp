@@ -135,6 +135,7 @@
                         <c:out value='Welcome ${param.id } ' escapeXml="true" default="Need to login" />
                      </c:if>
                     </li>
+                    
                     <li class="dropdown">
                         
                         <ul class="dropdown-menu dropdown-danger">
@@ -150,8 +151,13 @@
                            </ul>
                           </li>
                             <li>
-                        <a href="myPage.jsp" class="btn btn-danger btn-fill" >마이페이지</a>
-                     </li>
+                            <form  method="post" action="logout">
+                            	<input type="submit" class="btn btn-danger btn-fill" value="로그아웃" />
+                            </form>
+                            <li>
+                            	<a href="myPage.jsp" class="btn btn-danger btn-fill" >마이페이지</a>
+                            </li>
+                     	</li>
                       </ul>
                </div>
             <!-- /.navbar-collapse -->

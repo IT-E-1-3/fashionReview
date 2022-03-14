@@ -5,11 +5,29 @@
  <%
  	request.setCharacterEncoding("UTF-8");
  
+ 	
  	String id = (String)session.getAttribute("id");
  	
- 	BoardVO board = new BoardVO();
+ 	BoardVO board = new BoardVO(); 	
  	BoardDAO boardDAO = new BoardDAO();
- 	ArrayList<BoardVO> boardList = boardDAO.selectAllBoard();
+ 	
+ 	
+ 	String check = (String)session.getAttribute("category");
+ 	String select = (String)session.getAttribute("selectOption");
+ 	
+ 	
+ 	ArrayList<BoardVO> boardList =new ArrayList<>();
+ 	
+ 	if((check==null || check.equals(""))&&(select==null || select.equals(""))){
+ 		boardList = boardDAO.selectAllBoard();
+ 
+
+ 
+ 	}else{
+ 		boardList = (ArrayList<BoardVO>)session.getAttribute("boardList");
+ 
+ 	}
+ 	
  	
 
  	
@@ -87,7 +105,7 @@ text-align: right;
        <div class="collapse navbar-collapse" id="navbarNav">
          <ul class="navbar-nav">
           <li class="nav-item">
-            <div class="nav-link text-white"  id='loginOK'>   <a href="postAnalysis.jsp" style="background-color:lightgrey" class="a_style btn btn-light"> <%=id %>님의 ScrapBox</a></div>
+         	 
           </li>
         </ul>
       </div>
@@ -98,32 +116,32 @@ text-align: right;
    
   <div class="main-container">
     
-<aside class="row row-cols-lg-1 mt-5">
-      <ul class="list-group">
-        <li class="list-group-item text-primary col-lg-12">
-          <a href="#" class="a_style">상의</a>
-        </li>
-        <li class="list-group-item text-primary col-lg-12">
-          <a href="#" class="a_style">하의</a>
-        </li>
-        <li class="list-group-item text-primary col-lg-12">
-          <a href="#" class="a_style">신발</a> 
-        </li>
-        <li class="list-group-item text-primary col-lg-12">
-          <a href="#" class="a_style">악세사리</a>
-        </li>
-      </ul>
-    </aside>
+
     <!-- Board -->
 <br><br>
+
                            
     <div class="searchDiv" style="margin-top:50px" >
-          <select id="searchType" style="height:43px">       
+    <aside class="row row-cols-lg-1 mt-5" style="float:left">
+        <form method="post" action="selectCategory">
+        <div>
+           <label><input type="checkbox" name="choice" value="top"> 상의</label>
+           <label><input type="checkbox" name="choice" value="bottom"> 하의</label>
+           <label><input type="checkbox" name="choice" value="shoes"> 신발</label>
+           <label><input type="checkbox" name="choice" value="Accessories"> 악세사리</label>
+           <input type="submit" value="선택"/>
+         </div>
+         </form>
+    </aside>
+    <form method="post" action="selectBy">
+          <select id="searchType" name="selectOption" style="height:43px">       
+             <option value="" selected>검색조건</option>
              <option value="title">제목</option>
              <option value="id">아이디</option>
           </select>
       <input type="text" id="keyword" name="keyword" style="width: 230px; height:43px" placeholder="제목/아이디를 입력해주세요."/>
-          <button type="button" id="searchBtn" class="btn btn-secondary btn-lg"  >검색</button>
+          <input type="submit" id="searchBtn" class="btn btn-secondary btn-lg" value="검색" />
+    </form>
       
     </div>
    <section>

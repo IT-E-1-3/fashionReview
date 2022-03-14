@@ -25,7 +25,7 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
   position:relative;
   left:40%;
   transform: translateX(-50%);
-  margin-bottom: 20px;
+  border-radius:10px;
   margin-top:20px;
   width:80%;
   height:40px;
@@ -63,7 +63,7 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
 	  
 	%>
    <div class="w3-content w3-container w3-margin-top">
-      <div class="w3-container w3-card-4">
+      <div class="w3-container w3-card-4" style="width:40%;margin-left:35%;">
          <div class="w3-center w3-large w3-margin-top">
             <h3><%=user.getId() %>님의 회원정보</h3>
          </div>

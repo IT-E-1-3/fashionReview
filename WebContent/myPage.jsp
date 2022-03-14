@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"   
 import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
+
 <%
 	String id = (String)session.getAttribute("id"); 
-	
 
 	MemberShipVO m =  new MemberShipVO();
 	MemberShipDAO  membershipDAO = MemberShipDAO.getInstance();
 	m = membershipDAO.getMemberShipALL(id);	
+
+
+	MemberShipVO membership = new MemberShipVO();
+	membership = membershipDAO.getMemberShipALL(id);
+	
+	ArrayList<MemberShipVO> rankers = new ArrayList<MemberShipVO>();
+	//rankers = membershipDAO.selectTopPostRankers();
 
 
 %>
@@ -48,7 +55,9 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
 </head>
 <body>
 	<%
+
 	   if(m==null||m.equals("")){
+
 	%>
 	  
 	<p align="center">
@@ -60,7 +69,7 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
 	  
 	  <%
 	}else{
-	   
+
 	%>
    <div class="w3-content w3-container w3-margin-top">
       <div class="w3-container w3-card-4">
@@ -70,19 +79,20 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
          <div>
             
                <p>
+
                   <label>멤버쉽 등급 : <%= m.getGrade() %></label> 
-                  <input class="w3-input" type="text" id="id" name="id" readonly value="<%= m.getGrade() %>"> 
+                  <input class="w3-input" type="text" id="id" name="id" readonly value="<%= m.getGrade() %>">      
                </p>
+
                <p>
                   <label>멤버쉽 포인트 : <%= m.getPoint() %></label> 
                   <input class="w3-input" type="text" id="email" name="email" value=<%= m.getPoint() %> required> 
                </p>
-            
-            <br />
-           
-     
+            <br />     
                <p>
+
                   <label>작성한 게시글 수 : <%= m.getPost_count() %></label>
+
                   <input class="w3-input" id="old_pw" name="old_pw" type="text" required>
                </p>
                <p>
@@ -98,8 +108,11 @@ import="java.util.*,com.vo.*,com.dao.*" pageEncoding="UTF-8"%>
                   <p class="w3-center">
                   <button type="submit" class="btn">메인화면</button>
                </p>
+
                <%}%>
             
+
+               
          </div>
       </div>
    </div>
