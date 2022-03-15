@@ -1,5 +1,4 @@
 package com.controller.member;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -42,6 +41,7 @@ public class JoinServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
 		
 		String url="resultPage.jsp";
 		
@@ -50,6 +50,7 @@ public class JoinServlet extends HttpServlet {
 	    UserVO userVO = new UserVO();    
 	    userVO.setId(request.getParameter("id"));
 	    userVO.setPw(request.getParameter("pw"));
+	    userVO.setName(request.getParameter("name"));
 	    userVO.setEmail(request.getParameter("email"));
 	    userVO.setPhone(request.getParameter("phone"));
 	    userVO.setAge(Integer.parseInt(request.getParameter("age")));
@@ -57,9 +58,12 @@ public class JoinServlet extends HttpServlet {
 	    userVO.setHeight(Integer.parseInt(request.getParameter("height")));
 	    userVO.setWeight(Integer.parseInt(request.getParameter("weight")));
 	    
-	    session.setAttribute("id", request.getParameter("id"));    
+	    System.out.println("##");
+	    System.out.println(userVO.getGender());
 	    
-	    UserDAO userDAO = new UserDAO();
+	    session.setAttribute("id", request.getParameter("id"));  
+	    
+	    UserDAO userDAO = UserDAO.getInstance();
 	    try {
 			userDAO.insertUser(userVO);
 			System.out.println("post에서 회원가입 완료");

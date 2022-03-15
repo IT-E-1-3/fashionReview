@@ -1,49 +1,53 @@
-<!--
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	import="java.util.*,com.dao.*,com.vo.*" pageEncoding="UTF-8"%>
+<%
+ 	request.setCharacterEncoding("UTF-8");
 
-=========================================================
-* Gaia Bootstrap Template - v1.0.1
-=========================================================
+ 	String id = (String)session.getAttribute("id");%>
 
-* Product Page: https://www.creative-tim.com/product/gaia-bootstrap-template
-* Licensed under MIT (https://github.com/creativetimofficial/gaia-bootstrap-template/blob/master/LICENSE.md)
-* Copyright 2019 Creative Tim (http://www.creative-tim.com)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
--->
 
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html lang="ko">
 <head>
-   <meta charset="UTF-8" />
-   <% request.setCharacterEncoding("UTF-8");
-  
-   %>
-    <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
-   <link rel="icon" type="image/png" sizes="96x96" href="assets/img/favicon.png">
+<meta charset="UTF-8" />
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>FIP - Fashion Information Platform</title>
-    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
-    <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <link href="assets/css/gaia.css" rel="stylesheet"/>
+<link rel="apple-touch-icon" sizes="76x76"
+	href="assets/img/apple-icon.png">
+<link rel="icon" type="image/png" sizes="96x96"
+	href="assets/img/favicon.png">
 
-    <!--     Fonts and icons     -->
-    <link href='https://fonts.googleapis.com/css?family=Cambo|Poppins:400,600' rel='stylesheet' type='text/css'>
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-    <link href="assets/css/fonts/pe-icon-7-stroke.css" rel="stylesheet">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>FIP - Fashion Information Platform</title>
+<meta
+	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+	name='viewport' />
+<link href="assets/css/bootstrap.css" rel="stylesheet" />
+<link href="assets/css/gaia.css" rel="stylesheet" />
 
-<script type="text/javascript" 
-    src="https://www.gstatic.com/charts/loader.js">
-    </script>
-    </head>
+<!--jquery lib-->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"
+	integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!--     Fonts and icons     -->
+<link
+	href='https://fonts.googleapis.com/css?family=Cambo|Poppins:400,600'
+	rel='stylesheet' type='text/css'>
+<link
+	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+	rel="stylesheet">
+<link href="assets/css/fonts/pe-icon-7-stroke.css" rel="stylesheet">
+
+<script src="js/my.js"></script>
+
+<script type="text/javascript"
+	src="https://www.gstatic.com/charts/loader.js">
+</script>
+</head>
 <script type="text/javascript">
       // 구글 오픈 API에서 차트 객체 로드 
       google.charts.load('current', {'packages':['corechart']});
@@ -104,139 +108,125 @@
           chart1.draw(data1, google.charts.Bar.convertOptions(options1));
 
       }
-</script>  
+</script>
 
 <body>
-    <nav class="navbar navbar-default navbar-transparent navbar-fixed-top" style="background-color:white">
-        <!-- if you want to keep the navbar hidden you can add this class to the navbar "navbar-burger"-->
-        <div class="container">
-            <div class="navbar-header">
-            
-                <button id="menu-toggle" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#example">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar bar1"></span>
-                    <span class="icon-bar bar2"></span>
-                    <span class="icon-bar bar3"></span>
-                </button>
-                <img width="50px" height="50px" src='assets/img/logo.png' style="margin-top:10px" />
-            </div>
-            <a class="navbar-brand" style="margin-left:5px; color:black; font-size:30px; font-family:fantasy; ">
-                    F I P
-                </a>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right navbar-uppercase">
-                    <li style="margin-top:25px; margin-right:5px">
-                        <c:if test="${empty param.id or empty param.pw}">
-                     <c:redirect url="loginForm.jsp">
-                        <c:param name="errMsg" value="Please Enter Id and PW" />
-                     </c:redirect>
-                     </c:if>
-                     <c:if test="${not empty param.id and not empty param.pw }">
-                        <c:out value='Welcome ${param.id } ' escapeXml="true" default="Need to login" />
-                     </c:if>
-                    </li>
-                    <li class="dropdown">
-                        
-                        <ul class="dropdown-menu dropdown-danger">
-                            <li>
-                                <a href="#"><i class="fa fa-facebook-square"></i> Facebook</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-instagram"></i> Instagram</a>
-                            </li>
-                           </ul>
-                          </li>
-                            <li>
-                        <a href="myPage.jsp" class="btn btn-danger btn-fill" >마이페이지</a>
-                     </li>
-                      </ul>
-               </div>
-            <!-- /.navbar-collapse -->
-        </div>
-    </nav>
-    <div class="section section-header">
-        <div class="parallax filter filter-color-black">
-            <div class="image"
-                style="background-image: url('assets/img/header-1.jpg')">
-            </div>
-            
-            <div class="container">
-                <div class="content">
-                    <div class="title-area">
-                        <h1 class="title-modern">Fashion Information Platform</h1>
-                        
-                        <div class="separator line-separator">♦</div>
-                        <h3>Fashion is what you make of it!</h3>
-                    </div>
+	<nav class="navbar navbar-default navbar-transparent navbar-fixed-top"
+		style="background-color: white">
+		<!-- if you want to keep the navbar hidden you can add this class to the navbar "navbar-burger"-->
+		<div class="container">
+			<div class="navbar-header">
 
-                    <div class="button-get-started">
-                        <a href="boardList.jsp" class="btn btn-white btn-fill btn-lg ">
-                            Community
-                        </a>
-                    </div>
-                </div>
+				<button id="menu-toggle" type="button" class="navbar-toggle"
+					data-toggle="collapse" data-target="#example">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar bar1"></span> <span class="icon-bar bar2"></span>
+					<span class="icon-bar bar3"></span>
+				</button>
+				<img width="50px" height="50px" src='assets/img/logo.png'
+					style="margin-top: 10px" />
+			</div>
+			<a class="navbar-brand"
+				style="margin-left: 5px; color: black; font-size: 30px; font-family: fantasy;">
+				F I P </a>
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right navbar-uppercase">
+					<li style="margin-top: 25px; margin-right: 5px">
+						<div id="loginDiv">
+							<%=id%> welcome
+						</div>
+					</li>
 
-            </div>
-        </div>
-    </div>
-    <div class="section section-our-team-freebie" style="background-color:#717171; padding:0px 0px 0px 0px;" >
-        <div class="parallax filter filter-color-black">
-            <div class="image" style="background-color:white">
-            </div>
-            <div class="container">
-                <div class="content">
-                    <div class="row">
-                        <div class="title-area">
-                            <h2>Analysis Charts</h2>
-                            <div class="separator separator-danger">✻</div>
-                            
-                        </div>
-                    </div>
-                    <div class="team">
-                        <div class="row">
-                            <div class="col-md-10 col-md-offset-1">
-                                <div class="row">
-                                    <div class="col-md-4" style="width:460px;">
-                                        <div class="card card-member">
-                                            <div class="content">
-                                                
-                                                <div class="description" id='chart_div' >
-                                                
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4" style="width:460px;">
-                                        <div class="card card-member">
-                                            <div class="content">
-                                                
-                                               
-                                                   <div class="description" id='chart_div2' style="height:300px;">
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
+					<li>
+						<form method="post" action="logout">
+							<input type="submit" class="btn btn-danger btn-fill" value="로그아웃" />
+						</form>
+					<li>
+						<button class="btn btn-danger btn-fill"
+							onclick='window.open("myPage.jsp", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=300,width=1200,height=800");'>마이페이지</button>
+					</li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+	</nav>
+	<div class="section section-header">
+		<div class="parallax filter filter-color-black">
+			<div class="image"
+				style="background-image: url('assets/img/header-1.jpg')"></div>
 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <footer class="footer footer-big footer-color-black" data-color="black">
-        <div class="container">
-            <hr>
-            <div class="copyright">
-                 © <script> document.write(new Date().getFullYear()) </script> Creative 3Team, 현대 it&E 3기
-            </div>
-        </div>
-    </footer>
+			<div class="container">
+				<div class="content">
+					<div class="title-area">
+						<h1 class="title-modern">Fashion Information Platform</h1>
+
+						<div class="separator line-separator">♦</div>
+						<h3>Fashion is what you make of it!</h3>
+					</div>
+
+					<div class="button-get-started">
+						<a class="btn btn-white btn-fill btn-lg"
+							onclick='window.open("boardList.jsp", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=300,width=1200,height=800");'>
+							Community </a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	<div class="section section-our-team-freebie"
+		style="background-color: #717171; padding: 0px 0px 0px 0px;">
+		<div class="parallax filter filter-color-black">
+			<div class="image" style="background-color: white"></div>
+			<div class="container">
+				<div class="content">
+					<div class="row">
+						<div class="title-area">
+							<h2>Analysis Charts</h2>
+							<div class="separator separator-danger">✻</div>
+
+						</div>
+					</div>
+					<div class="team">
+						<div class="row">
+							<div class="col-md-10 col-md-offset-1">
+								<div class="row">
+									<div class="col-md-4" style="width: 460px;">
+										<div class="card card-member">
+											<div class="content">
+
+												<div class="description" id='chart_div'></div>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-4" style="width: 460px;">
+										<div class="card card-member">
+											<div class="content">
+
+
+												<div class="description" id='chart_div2'
+													style="height: 300px;"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<footer class="footer footer-big footer-color-black"
+			data-color="black">
+			<div class="container">
+				<hr>
+				<div class="copyright">
+					©
+					<script> document.write(new Date().getFullYear()) </script>
+					Creative 3Team, 현대 it&E 3기
+				</div>
+			</div>
+		</footer>
 </body>
 <!--   core js files    -->
 <script src="assets/js/jquery.min.js" type="text/javascript"></script>
@@ -246,7 +236,8 @@
 <script type="text/javascript" src="assets/js/modernizr.js"></script>
 
 <!--  script for google maps   -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript"
+	src="https://maps.googleapis.com/maps/api/js"></script>
 
 <!--   file where we handle all the script from the Gaia - Bootstrap Template   -->
 <script type="text/javascript" src="assets/js/gaia.js"></script>
