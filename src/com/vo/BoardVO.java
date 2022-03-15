@@ -67,10 +67,11 @@ public class BoardVO {
 	public void setCategory(String[] category) {
         this.category="";
         for(int i=0;i<category.length; i++) {
-           this.category += (category[i]+",");
-           System.out.println(this.category);
-           
-           
+        	if(i!=category.length-1) {
+        		this.category += (category[i]+",");
+        	}else {
+        		this.category += (category[i]);
+        	}         
         }
 
 }
