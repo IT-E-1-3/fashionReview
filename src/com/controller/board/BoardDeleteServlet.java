@@ -8,54 +8,42 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.dao.BoardDAO;
-import com.vo.BoardVO;
 
-/**
- * Servlet implementation class BoardDeleteServlet
+/*
+ * 게시물 삭제 서블릿
+ * 작성자 : 김보경, 차성호
  */
+
+//deletePost의 매핑명렁어에 서블릿 실행됨
 @WebServlet("/deletePost")
 public class BoardDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public BoardDeleteServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	//기본생성자
+	public BoardDeleteServlet() {
+		super();
+
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
+	//post방식
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		//request 데이터 utf-8형식으로 encoding
 		request.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-	    
-	    String board_id = request.getParameter("board_id");
-	    BoardVO board = new BoardVO();
-	    BoardDAO boardDAO = new BoardDAO();
-	    
-	    
-	    
-	    boardDAO.deletePost(board_id);
-	   
-	    
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("boardList.jsp");
-	    dispatcher.forward(request, response);
+		
+		//name='board_id'인 항목의 parameter값 받아옴
+		String board_id = request.getParameter("board_id");
+		//BoardDAO 객체 생성
+		BoardDAO boardDAO = new BoardDAO();
+		//BoardDAO의 deletePost메소드 실행
+		boardDAO.deletePost(board_id);
+
+		//boardList.jsp로 포워딩
+		RequestDispatcher dispatcher = request.getRequestDispatcher("boardList.jsp");
+		dispatcher.forward(request, response);
 	}
 
 }

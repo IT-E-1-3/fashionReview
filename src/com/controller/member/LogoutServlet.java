@@ -10,47 +10,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class LogoutServlet
+
+/*
+ * 로그아옷 서블릿
+ * 작성자 : 김보경, 차성호
  */
+
+//logout의 매핑명렁어에 서블릿 실행됨
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public LogoutServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	//기본생성자
+	public LogoutServlet() {
+		super();
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
-		HttpSession session=request.getSession();
-		if(session.getAttribute("id")!=null) {
-			System.out.println(session.getAttribute("id"));
+	//post방식
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		//세션값 사용하기 위해 HttpSession객체 생성
+		HttpSession session = request.getSession();
+		//session의 id key값을 같는 value값이 존재할 경우
+		if (session.getAttribute("id") != null || session.getAttribute("id").equals("")) {
+			//session정보 초기화
 			session.invalidate();
-			
-			System.out.println("로그아웃 성공");
 		}
+		
+		//loginForm.jsp로 포워딩
 		RequestDispatcher dispatcher = request.getRequestDispatcher("loginForm.jsp");
-	    dispatcher.forward(request, response);
-		
-		
-		
+		dispatcher.forward(request, response);
 	}
 
 }

@@ -10,7 +10,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import com.controller.util.DBManager;
 import com.vo.BoardVO;
 import com.vo.MemberShipVO;
 

@@ -1,36 +1,19 @@
 package com.dao;
 
-import java.net.URLEncoder;
-
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.*;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.sql.DataSource;
-
 import com.vo.MemberShipVO;
-import com.vo.UserVO;
 
 import oracle.jdbc.OracleTypes;
 
 import com.controller.DBmanager.*;
 
-
-
-
 public class MemberShipDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
-//	private ResultSet rs;
-//	private DataSource dataFactory;
 
 	private MemberShipDAO() {
 	}// 싱글턴 패턴
@@ -44,7 +27,6 @@ public class MemberShipDAO {
 	public MemberShipVO getMemberShipALL(String id) {
 
 		MemberShipVO membershipVO = null;
-		Connection conn = null;
 
 		String runSP = "{ call membership_pack.membership_select_all_user_id(?, ?) }";
 
@@ -60,7 +42,7 @@ public class MemberShipDAO {
 
 				ResultSet resultSet = (ResultSet) callableStatement.getObject(2);
 
-				membershipVO= new MemberShipVO();
+				membershipVO = new MemberShipVO();
 				while (resultSet.next()) {
 					String tId = resultSet.getString(1);
 					String tGrade = resultSet.getString(2);
@@ -71,23 +53,19 @@ public class MemberShipDAO {
 					membershipVO.setGrade(tGrade);
 					membershipVO.setPost_count(tPostCount);
 					membershipVO.setPoint(tMPoint);
-
-					System.out.println(membershipVO.toString());
 				}
-
+				conn.close();
+				callableStatement.close();
 			} catch (SQLException e) {
 				System.out.println("프로시저에서 에러 발생!");
-				// System.err.format("SQL State: %s", e.getSQLState());
 				System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-//			DBManager.close(conn, callableStatement);
 		}
 		return membershipVO;
 	}
-	
+
 	// TOP 3 view
 //	public ArrayList<MemberShipVO> selectTopPostRankers() {
 //		ArrayList<MemberShipVO> rankerList = new ArrayList<MemberShipVO>();
