@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	import="java.util.*,com.dao.*,com.vo.*" pageEncoding="UTF-8"%>
+   import="java.util.*,com.dao.*,com.vo.*" pageEncoding="UTF-8"%>
+<!-- 김보경, 차성호: 세션에서 id를 받아와 로그아웃할 때 이용 -->
 <%
- 	request.setCharacterEncoding("UTF-8");
+    request.setCharacterEncoding("UTF-8");
 
- 	String id = (String)session.getAttribute("id");%>
+    String id = (String)session.getAttribute("id");%> 
 
 
 <!DOCTYPE html>
@@ -13,39 +14,39 @@
 <meta charset="UTF-8" />
 
 <link rel="apple-touch-icon" sizes="76x76"
-	href="assets/img/apple-icon.png">
+   href="assets/img/apple-icon.png">
 <link rel="icon" type="image/png" sizes="96x96"
-	href="assets/img/favicon.png">
+   href="assets/img/favicon.png">
 
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>FIP - Fashion Information Platform</title>
 <meta
-	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
-	name='viewport' />
+   content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+   name='viewport' />
 <link href="assets/css/bootstrap.css" rel="stylesheet" />
 <link href="assets/css/gaia.css" rel="stylesheet" />
 
 <!--jquery lib-->
 <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"
-	integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA=="
-	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+   src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"
+   integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA=="
+   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!--     Fonts and icons     -->
 <link
-	href='https://fonts.googleapis.com/css?family=Cambo|Poppins:400,600'
-	rel='stylesheet' type='text/css'>
+   href='https://fonts.googleapis.com/css?family=Cambo|Poppins:400,600'
+   rel='stylesheet' type='text/css'>
 <link
-	href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
-	rel="stylesheet">
+   href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"
+   rel="stylesheet">
 <link href="assets/css/fonts/pe-icon-7-stroke.css" rel="stylesheet">
 
 <script src="js/my.js"></script>
 
 <script type="text/javascript"
-	src="https://www.gstatic.com/charts/loader.js">
+   src="https://www.gstatic.com/charts/loader.js">
 </script>
 </head>
 <script type="text/javascript">
@@ -111,122 +112,126 @@
 </script>
 
 <body>
-	<nav class="navbar navbar-default navbar-transparent navbar-fixed-top"
-		style="background-color: white">
-		<!-- if you want to keep the navbar hidden you can add this class to the navbar "navbar-burger"-->
-		<div class="container">
-			<div class="navbar-header">
+   <nav class="navbar navbar-default navbar-transparent navbar-fixed-top"
+      style="background-color: white">
+      <!-- if you want to keep the navbar hidden you can add this class to the navbar "navbar-burger"-->
+      <div class="container">
+         <div class="navbar-header">
 
-				<button id="menu-toggle" type="button" class="navbar-toggle"
-					data-toggle="collapse" data-target="#example">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar bar1"></span> <span class="icon-bar bar2"></span>
-					<span class="icon-bar bar3"></span>
-				</button>
-				<img width="50px" height="50px" src='assets/img/logo.png'
-					style="margin-top: 10px" />
-			</div>
-			<a class="navbar-brand"
-				style="margin-left: 5px; color: black; font-size: 30px; font-family: fantasy;">
-				F I P </a>
-			<div class="collapse navbar-collapse">
-				<ul class="nav navbar-nav navbar-right navbar-uppercase">
-					<li style="margin-top: 25px; margin-right: 5px">
-						<div id="loginDiv">
-							<%=id%> welcome
-						</div>
-					</li>
+            <button id="menu-toggle" type="button" class="navbar-toggle"
+               data-toggle="collapse" data-target="#example">
+               <span class="sr-only">Toggle navigation</span> <span
+                  class="icon-bar bar1"></span> <span class="icon-bar bar2"></span>
+               <span class="icon-bar bar3"></span>
+            </button>
+            <img width="50px" height="50px" src='assets/img/logo.png'
+               style="margin-top: 10px" />
+         </div>
+         <a class="navbar-brand"
+            style="margin-left: 5px; color: black; font-size: 30px; font-family: fantasy;">
+            F I P </a>
+         <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right navbar-uppercase">
+               <li style="margin-top: 25px; margin-right: 5px">
+                  <div id="loginDiv">
+                  <!-- 김보경, 차성호: id값 받아옴 -->
+                     <%=id%> welcome
+                  </div>
+               </li>
 
-					<li>
-						<form method="post" action="logout">
-							<input type="submit" class="btn btn-danger btn-fill" value="로그아웃" />
-						</form>
-					<li>
-						<button class="btn btn-danger btn-fill"
-							onclick='window.open("myPage.jsp", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=300,width=1200,height=800");'>마이페이지</button>
-					</li>
-				</ul>
-			</div>
-			<!-- /.navbar-collapse -->
-		</div>
-	</nav>
-	<div class="section section-header">
-		<div class="parallax filter filter-color-black">
-			<div class="image"
-				style="background-image: url('assets/img/header-1.jpg')"></div>
+               <li>
+               <!-- 김보경, 차성호: LogoutServlet으로 post로 매핑 -->
+                  <form method="post" action="logout">
+                     <input type="submit" class="btn btn-danger btn-fill" value="로그아웃" />
+                  </form>
+               <li>
+               <!-- 김보경, 차성호: 멤버쉽 정보를 담고 있는 마이페이지로 새 브라우저 창 띄우기 -->
+                  <button class="btn btn-danger btn-fill"
+                     onclick='window.open("myPage.jsp", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=300,width=1200,height=800");'>마이페이지</button>
+               </li>
+            </ul>
+         </div>
+         <!-- /.navbar-collapse -->
+      </div>
+   </nav>
+   <div class="section section-header">
+      <div class="parallax filter filter-color-black">
+         <div class="image"
+            style="background-image: url('assets/img/header-1.jpg')"></div>
 
-			<div class="container">
-				<div class="content">
-					<div class="title-area">
-						<h1 class="title-modern">Fashion Information Platform</h1>
+         <div class="container">
+            <div class="content">
+               <div class="title-area">
+                  <h1 class="title-modern">Fashion Information Platform</h1>
 
-						<div class="separator line-separator">♦</div>
-						<h3>Fashion is what you make of it!</h3>
-					</div>
+                  <div class="separator line-separator">♦</div>
+                  <h3>Fashion is what you make of it!</h3>
+               </div>
 
-					<div class="button-get-started">
-						<a class="btn btn-white btn-fill btn-lg"
-							onclick='window.open("boardList.jsp", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=300,width=1200,height=800");'>
-							Community </a>
-					</div>
-				</div>
+               <div class="button-get-started">
+               <!-- 김보경, 차성호: 게시판 페이지로 새 브라우저 창 띄우기 -->
+                  <a class="btn btn-white btn-fill btn-lg"
+                     onclick='window.open("boardList.jsp", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=300,width=1200,height=800");'>
+                     Community </a>
+               </div>
+            </div>
 
-			</div>
-		</div>
-	</div>
-	<div class="section section-our-team-freebie"
-		style="background-color: #717171; padding: 0px 0px 0px 0px;">
-		<div class="parallax filter filter-color-black">
-			<div class="image" style="background-color: white"></div>
-			<div class="container">
-				<div class="content">
-					<div class="row">
-						<div class="title-area">
-							<h2>Analysis Charts</h2>
-							<div class="separator separator-danger">✻</div>
+         </div>
+      </div>
+   </div>
+   <div class="section section-our-team-freebie"
+      style="background-color: #717171; padding: 0px 0px 0px 0px;">
+      <div class="parallax filter filter-color-black">
+         <div class="image" style="background-color: white"></div>
+         <div class="container">
+            <div class="content">
+               <div class="row">
+                  <div class="title-area">
+                     <h2>Analysis Charts</h2>
+                     <div class="separator separator-danger">✻</div>
 
-						</div>
-					</div>
-					<div class="team">
-						<div class="row">
-							<div class="col-md-10 col-md-offset-1">
-								<div class="row">
-									<div class="col-md-4" style="width: 460px;">
-										<div class="card card-member">
-											<div class="content">
+                  </div>
+               </div>
+               <div class="team">
+                  <div class="row">
+                     <div class="col-md-10 col-md-offset-1">
+                        <div class="row">
+                           <div class="col-md-4" style="width: 460px;">
+                              <div class="card card-member">
+                                 <div class="content">
 
-												<div class="description" id='chart_div'></div>
-											</div>
-										</div>
-									</div>
-									<div class="col-md-4" style="width: 460px;">
-										<div class="card card-member">
-											<div class="content">
+                                    <div class="description" id='chart_div'></div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="col-md-4" style="width: 460px;">
+                              <div class="card card-member">
+                                 <div class="content">
 
 
-												<div class="description" id='chart_div2'
-													style="height: 300px;"></div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<footer class="footer footer-big footer-color-black"
-			data-color="black">
-			<div class="container">
-				<hr>
-				<div class="copyright">
-					©
-					<script> document.write(new Date().getFullYear()) </script>
-					Creative 3Team, 현대 it&E 3기
-				</div>
-			</div>
-		</footer>
+                                    <div class="description" id='chart_div2'
+                                       style="height: 300px;"></div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <footer class="footer footer-big footer-color-black"
+         data-color="black">
+         <div class="container">
+            <hr>
+            <div class="copyright">
+               ©
+               <script> document.write(new Date().getFullYear()) </script>
+               Creative 3Team, 현대 it&E 3기
+            </div>
+         </div>
+      </footer>
 </body>
 <!--   core js files    -->
 <script src="assets/js/jquery.min.js" type="text/javascript"></script>
@@ -237,7 +242,7 @@
 
 <!--  script for google maps   -->
 <script type="text/javascript"
-	src="https://maps.googleapis.com/maps/api/js"></script>
+   src="https://maps.googleapis.com/maps/api/js"></script>
 
 <!--   file where we handle all the script from the Gaia - Bootstrap Template   -->
 <script type="text/javascript" src="assets/js/gaia.js"></script>
