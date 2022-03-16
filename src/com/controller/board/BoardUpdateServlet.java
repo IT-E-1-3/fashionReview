@@ -44,7 +44,7 @@ public class BoardUpdateServlet extends HttpServlet {
 		board.setBoard_id(board_id);
 		board.setContent(request.getParameter("content"));
 		board.setTitle(request.getParameter("title"));
-		board.setCategory(request.getParameterValues("category"));
+		board.setCategoryList(request.getParameterValues("category"));
 		
 		//BoardDAO의 updatePost메소드 실행
 		boardDAO.updatePost(board);

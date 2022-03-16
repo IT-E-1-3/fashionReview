@@ -50,7 +50,7 @@ public class BoardInsertServlet extends HttpServlet {
 		board.setUser_id(request.getParameter("user_id"));
 		board.setTitle(request.getParameter("title"));
 		board.setContent(request.getParameter("content"));
-		board.setCategory(categories);
+		board.setCategoryList(categories);
 		//파일 저장을 위한 UploadUtil클래스의 객체를 UploadUtil.create메소드를 통해 생성
 		UploadUtil uploadUtil = UploadUtil.create(request.getServletContext());
 

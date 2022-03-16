@@ -193,7 +193,7 @@ body {
                         <td><%=boardVO.getUser_id() %></td>
                         <!-- 작성날짜 반환 -->
                         <td><fmt:formatDate pattern="yyyy/MM/dd"
-                              value="<%=boardVO.getWirte_date() %>" /></td>
+                              value="<%=boardVO.getWrite_date() %>" /></td>
                      </tr>
                      <%} %>
 

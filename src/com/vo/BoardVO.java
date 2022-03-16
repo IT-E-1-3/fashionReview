@@ -1,85 +1,47 @@
 package com.vo;
 
+/**
+ * @file Name : BoardVO.java
+ * @project name : fashion_review
+ * @package name : com.vo
+ * @작성일 : 2022.03.14
+ * @작성자 : 김정휴, 심다혜
+ * @Method 설명 : 게시글에 대한 정보를 저장하는 VO (게시글 id, 작성자 id, 제목, 내용, 첨부 사진, 작성 일자, 카테고리) 
+ */
+
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@ToString
 public class BoardVO {
 
-	private String board_id, user_id, title, content, picture, category;
-	private Date wirte_date;
-	
-	public BoardVO() {
-		super();
-	}
-
-	public BoardVO(String board_id, String user_id, String title, String content, String picture, String category,
-			Date wirte_date) {
-		super();
-		this.board_id = board_id;
-		this.user_id = user_id;
-		this.title = title;
-		this.content = content;
-		this.picture = picture;
-		this.category = category;
-		this.wirte_date = wirte_date;
-	}
-
-	public String getCategory() {
-		return category;
-	}
-
-	public String getBoard_id() {
-		return board_id;
-	}
-	public void setBoard_id(String board_id) {
-		this.board_id = board_id;
-	}
-	public String getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(String user_id) {
-		this.user_id = user_id;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getContent() {
-		return content;
-	}
-	public void setContent(String content) {
-		this.content = content;
-	}
-	public String getPicture() {
-		return picture;
-	}
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
-	public Date getWirte_date() {
-		return wirte_date;
-	}
-	public void setWirte_date(Date wirte_date) {
-		this.wirte_date = wirte_date;
-	}
-	
-	public void setCategory(String[] category) {
+   private String board_id, user_id, title, content, picture, category;
+   private Date write_date;
+  
+   public void setCategoryList(String[] category) {
         this.category="";
         for(int i=0;i<category.length; i++) {
-        	if(i!=category.length-1) {
-        		this.category += (category[i]+",");
-        	}else {
-        		this.category += (category[i]);
-        	}         
+           if(i!=category.length-1) {
+              this.category += (category[i]+",");
+           }else {
+              this.category += (category[i]);
+           }         
         }
 
-}
+   }
+   
 
-	@Override
-	public String toString() {
-		return "BoardVO [board_id=" + board_id + ", user_id=" + user_id + ", title=" + title + ", content=" + content
-				+ ", picture=" + picture + ", category=" + category + ", wirte_date=" + wirte_date + "]";
-	}
-	
+  
+   
 }

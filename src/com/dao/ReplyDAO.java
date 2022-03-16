@@ -13,6 +13,14 @@ import javax.sql.DataSource;
 import com.vo.BoardVO;
 import com.vo.ReplyVO;
 
+/**
+ * @file Name : ReplyDAO.java
+ * @project name : fashion_review
+ * @package name : com.dao
+ * @작성일 : 2022.03.14
+ * @작성자 : 김정휴, 심다혜
+ * @Method 설명 : 댓글 삽입, 삭제, 수정, 읽기에 대한 DB 프로시져를 실행하기 위한 기능을 전담하기 위한 Object
+ */
 public class ReplyDAO {
 
 	private Connection conn;
@@ -29,6 +37,13 @@ public class ReplyDAO {
 			e.printStackTrace();
 		}
 	}
+
+	   /**
+	    * @Method Name : insertReply
+	    * @작성일 : 2022.03.14
+	    * @작성자 : 김정휴, 심다혜
+	    * @Method 설명 : Reply 패키지의 reply_insert 프로시저로 게시글에 댓글 추가
+	    */
 
 	public void insertReply(ReplyVO reply) {
 		PreparedStatement pstmt = null;
@@ -58,6 +73,13 @@ public class ReplyDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	   /**
+	    * @Method Name : selectAllReply
+	    * @작성일 : 2022.03.14
+	    * @작성자 : 김정휴, 심다혜
+	    * @Method 설명 : Reply 패키지의 reply_select_all_board_id 프로시저로 해당 게시글에 대한 댓글 모두 읽기
+	    */
 
 	public ArrayList<ReplyVO> selectAllReply(String board_id) {
 		ArrayList<ReplyVO> list = new ArrayList<>();
@@ -89,6 +111,13 @@ public class ReplyDAO {
 		return list;
 	}
 
+	 /**
+	    * @Method Name : deleteReply
+	    * @작성일 : 2022.03.14
+	    * @작성자 : 김정휴, 심다혜
+	    * @Method 설명 : Reply 패키지의 reply_delete 프로시저로 해당 댓글 삭제
+	    */
+
 	public void deleteReply(String reply_id) {
 		try {
 			conn = dataFactory.getConnection();
@@ -106,6 +135,13 @@ public class ReplyDAO {
 		}
 
 	}
+
+	 /**
+	    * @Method Name : countReply
+	    * @작성일 : 2022.03.14
+	    * @작성자 : 김정휴, 심다혜
+	    * @Method 설명 : Reply 패키지의 reply_count 프로시저로 한 회원이 작성한 댓글 개수(멤버십 포인트 계산을 위한) 세기
+	    */
 
 	public int countReply(String user_id) {
 		int count = 0;

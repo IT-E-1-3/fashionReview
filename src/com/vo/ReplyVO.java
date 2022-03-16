@@ -1,5 +1,13 @@
 package com.vo;
 
+/**
+ * @file Name : ReplyVO.java
+ * @project name : fasion_review
+ * @package name : com.vo
+ * @작성일 : 2022.03.14
+ * @작성자 : 김정휴, 심다혜
+ * @Method 설명 : 게시글에 대한 댓글 정보를 저장하는 VO(답장 id, 게시글 id, 작성자 id, 내용, 작성 날짜)
+ */
 import java.util.Date;
 
 import lombok.AllArgsConstructor;

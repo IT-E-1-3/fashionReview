@@ -59,7 +59,7 @@ public class SelectCategoryServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 		} else {
 			//게시물 검색을 위해 받아온 category값들을 BoardVO객체에 저장
-			board.setCategory(categories);
+			board.setCategoryList(categories);
 			//BoardDAO의 selectByCategory메소드를 실행시키고 실행결과를 list에 저장
 			list = boardDAO.selectByCategory(board);
 			//session의 boardList key값을 갖는 value에 list(실행결과)를 저장

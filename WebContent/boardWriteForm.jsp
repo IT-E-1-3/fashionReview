@@ -144,7 +144,7 @@ footer {
                   </tr>
                   <tr>
                      <td>내용</td>
-                     <td><textarea style="width: 400px; height: 500px"
+                     <td><textarea style="width: 400px; height: 250px"
                            name="content" id="content"></textarea></td>
                   </tr>
                   <tr>
