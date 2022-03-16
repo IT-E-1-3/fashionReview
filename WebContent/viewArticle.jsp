@@ -122,14 +122,18 @@ replyList = replyDAO.selectAllReply(request.getParameter("no"));
       //const id = 'tjdgh6273';
       const board_user_id = $("#board_user_id").val();
 
-      // id와 게시글 쓴 id가 다르면 버튼의 가시성 유무
+      // id와 게시글 쓴 id가 다르면 버튼의 가시성 유무, 제목과 내용부분 readonly처리
       if (id != board_user_id) {
          $("#updateBtn").attr("style", "visibility:hidden");
          $("#deleteBtn").attr("style", "visibility:hidden");
+         $("#title").attr("readonly",true);
+         $("#content").attr("readonly",true);
       } else {
 
          $("#updateBtn").attr("style", "visibility:visible");
          $("#deleteBtn").attr("style", "visibility:visible");
+         $("#title").attr("readonly",false);
+         $("#content").attr("readonly",false);
       }
 
    });
@@ -175,16 +179,16 @@ replyList = replyDAO.selectAllReply(request.getParameter("no"));
                </tr>
 
                <tr>
-                  <td>내용</td>
-                  <td><input style="width: 400px; height: 500px"
-                     value="<%=board.getContent()%>" name="content" id="content"></td>
-               </tr>
-               <tr>
                   <td>첨부파일</td>
                   <td><div id="div1" class="div">
-                        <img src="<%=board.getPicture()%>" height="500px" width="300px"
+                        <img src="<%=board.getPicture()%>" height="400px" width="300px"
                            id="picture">
                      </div></td>
+               </tr>
+               <tr>
+                  <td>내용</td>
+                  <td><input style="width: 400px; height: 250px"
+                     value="<%=board.getContent()%>" name="content" id="content"></td>
                </tr>
 
                <tr>

@@ -1,5 +1,14 @@
 package com.dao;
 
+/**
+ * @file Name : UserDAO.java
+ * @project name : fashion_review
+ * @package name : com.dao
+ * @작성일 : 2022.03.14
+ * @작성자 : 김정휴, 심다혜
+ * @Method 설명 : 회원정보 삽입, 삭제, 수정, 읽기에 대한 DB 프로시져를 실행하기 위한 기능을 전담하기 위한 Object
+ */
+
 import java.sql.CallableStatement;
 
 import java.sql.Connection;
@@ -26,6 +35,13 @@ public class UserDAO {
 	public static UserDAO getInstance() {
 		return instance;
 	}
+
+	 /**
+	    * @Method Name : insertUser
+	    * @작성일 : 2022.03.14
+	    * @작성자 : 김정휴, 심다혜
+	    * @Method 설명 : Member 패키지의 member_insert 프로시져를 이용하여 회원 가입
+	    */
 
 	public void insertUser(UserVO userVO) throws SQLException {
 
@@ -58,6 +74,14 @@ public class UserDAO {
 		}
 
 	}
+	
+	 /**
+	    * @Method Name : updateUser
+	    * @작성일 : 2022.03.14
+	    * @작성자 : 김정휴, 심다혜
+	    * @Method 설명 : Member 패키지의 member_all_update 프로시져를 통해 회원 정보 수정하기
+	    */
+
 
 	public void updateUser(UserVO userVO) throws SQLException {
 
@@ -92,6 +116,13 @@ public class UserDAO {
 
 	}
 
+	 /**
+	    * @Method Name : getUser
+	    * @작성일 : 2022.03.14
+	    * @작성자 : 김정휴, 심다혜
+	    * @Method 설명 : Member 패키지의 member_select_pw_member_id 프로시져를 사용하여 로그인시 아이디와 비밀번호 확인
+	    */
+
 	public UserVO getUser(String id) {
 
 		UserVO userVO = new UserVO();
@@ -125,6 +156,13 @@ public class UserDAO {
 		}
 		return userVO;
 	}
+
+	 /**
+	    * @Method Name : getUserAll
+	    * @작성일 : 2022.03.14
+	    * @작성자 : 김정휴, 심다혜
+	    * @Method 설명 : Member 패키지의 member_select_all_member_id 프로시져를 사용하여 한 id에 대한 모든 정보 가져오기
+	    */
 
 	public UserVO getUserAll(String id) {
 
@@ -169,6 +207,13 @@ public class UserDAO {
 		}
 		return userVO;
 	}
+
+	   /**
+	    * @Method Name : checkId
+	    * @작성일 : 2022.03.14
+	    * @작성자 : 김정휴, 심다혜
+	    * @Method 설명 : 회원가입 창에서 id값을 가져와 중복되는 id가 있는지 여부 파악
+	    */
 
 	public boolean checkId(String id) {
 		Connection conn = DBManager.getConnection();

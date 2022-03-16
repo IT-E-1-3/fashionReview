@@ -51,7 +51,6 @@ public class MemberInsertServlet extends HttpServlet {
 		userVO.setHeight(Integer.parseInt(request.getParameter("height")));
 		userVO.setWeight(Integer.parseInt(request.getParameter("weight")));
 
-		
 		try {
 			//UserDAO의 inserUser에 UserVO객체를 넣어주고 실행(회원가입)
 			userDAO.insertUser(userVO);
@@ -61,7 +60,7 @@ public class MemberInsertServlet extends HttpServlet {
 		//resultPage.jsp로 포워딩
 		RequestDispatcher dispatcher = request.getRequestDispatcher("resultPage.jsp");
 		dispatcher.forward(request, response);
-
 	}
 
 }
+

@@ -1,49 +1,30 @@
 package com.vo;
 
-public class MemberShipVO {
-	private String id, grade;
-	private int post_count, point;
-	public MemberShipVO(String id, String grade, int post_count, int point) {
-		super();
-		this.id = id;
-		this.grade = grade;
-		this.post_count = post_count;
-		this.point = point;
-	}
-	
-	public MemberShipVO() {
-		super();
-	}
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public String getGrade() {
-		return grade;
-	}
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
-	public int getPost_count() {
-		return post_count;
-	}
-	public void setPost_count(int post_count) {
-		this.post_count = post_count;
-	}
-	public int getPoint() {
-		return point;
-	}
-	public void setPoint(int point) {
-		this.point = point;
-	}
-	@Override
-	public String toString() {
-		return "MemberShipVO [id=" + id + ", grade=" + grade + ", post_count=" + post_count + ", point=" + point + "]";
-	}
-	
-	
+/**
+ * @file Name : MemberShipVO.java
+ * @project name : fashion_review
+ * @package name : com.vo
+ * @작성일 : 2022.03.14
+ * @작성자 : 김정휴, 심다혜
+ * @Method 설명 : 회원들에게 부여되는 등급, 포인트, 게시글 수, 댓글 수를 저장하는 VO 
+ */
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@ToString
+public class MemberShipVO {
+   private String id, grade;
+   private int post_count, point;
+   
 
 }
