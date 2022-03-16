@@ -89,10 +89,7 @@ user = userDAO.getUserAll(id);
                      class="w3-input" type="text" id="phone" name="phone"
                      value="<%=user.getPhone()%>">
                </p>
-               <p>
-                  <label>Age : <%=user.getAge()%></label> <input class="w3-input"
-                     type="text" id="age" name="age" value="<%=user.getAge()%>">
-               </p>
+           
                <p>
                   <label>Gender : <%=user.getGender()%></label> <input
                      class="w3-input" type="text" id="gender" name="gender"

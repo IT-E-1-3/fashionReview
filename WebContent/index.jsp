@@ -50,65 +50,32 @@
 </script>
 </head>
 <script type="text/javascript">
-      // 구글 오픈 API에서 차트 객체 로드 
-      google.charts.load('current', {'packages':['corechart']});
-      
-      // Google Visualization API  로드시 callback 사용할 콜백 함수 설정.
-      google.charts.setOnLoadCallback(drawChart);
-      // 이 함수에서 데이터 설정 및 차트를 그린다.
-      function drawChart() {
-        // 구글 차트는 데이터 테이블이라는 객체로 차트의 데이터를 전달한다.
-        var data = new google.visualization.DataTable();
-        //열 설정 2개를 설정하고 데이터 타입, 열이름
-        data.addColumn('string', 'Topping');
-        data.addColumn('number', 'Slices');
-        //행 추가 5개의 행을 추가한다. 
-        //파이차트는  전체 합의 비율로 표시
-        data.addRows([
-          ['Mushrooms', 3],
-          ['Onions', 2],
-          ['Olives', 1],
-          ['Zucchini', 1],
-          ['Pepperoni', 3]
-        ]);
-        // chart 옵션 설정 범례, 가로 세로 
-        var options = {'title':'Number of posts by fashion category',
-                       'width':400,
-                       'height':300};
-        // 파이 차트 객체 생성 및 div 태그에 내용 전달
-        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-        //차트 그리고 태그, 옵션
-        chart.draw(data, options);
-      }
-        google.charts.load('current', {'packages':['bar']});
-        google.charts.setOnLoadCallback(drawChart1);
-        function drawChart1() {
-        //2번째 차트
-        var data1 = google.visualization.arrayToDataTable([
-            ['Year', 'Sales', 'Expenses', 'Profit'],
-            ['2014', 1000, 400, 200],
-            ['2015', 1170, 460, 250],
-            ['2016', 660, 1120, 300],
-            ['2017', 1030, 540, 350]
-          ]);
-          
-      //차트 옵션 설정
-          var options1 = {
-            chart: {
-              title: 'Company Performance',
-              subtitle: 'Sales, Expenses, and Profit: 2014-2017',
-              'width':400,
-              'height':300
-            }
-          };
-      
-          //차트 객체 생성
-          var chart1 = 
-            new google.charts.Bar(document.getElementById('chart_div2'));
-        //파이 차트 그르기 데이터, 옵션
-          chart1.draw(data1, google.charts.Bar.convertOptions(options1));
+	
+	google.charts.setOnLoadCallback(drawChart1);
+	function drawChart1() {
+		//2번째 차트
+		var data1 = google.visualization.arrayToDataTable([
+				[ 'Year', 'Sales', 'Expenses', 'Profit' ],
+				[ '2014', 1000, 400, 200 ], [ '2015', 1170, 460, 250 ],
+				[ '2016', 660, 1120, 300 ], [ '2017', 1030, 540, 350 ] ]);
 
-      }
+		//차트 옵션 설정
+		var options1 = {
+			chart : {
+				title : 'Company Performance',
+				subtitle : 'Sales, Expenses, and Profit: 2014-2017',
+				'width' : 400,
+				'height' : 300
+			}
+		};
+
+		//차트 객체 생성
+		var chart1 = new google.charts.Bar(document
+				.getElementById('chart_div2'));
+		//파이 차트 그르기 데이터, 옵션
+		chart1.draw(data1, google.charts.Bar.convertOptions(options1));
+
+	}
 </script>
 
 <body>
@@ -241,10 +208,125 @@
 <script type="text/javascript" src="assets/js/modernizr.js"></script>
 
 <!--  script for google maps   -->
-<script type="text/javascript"
-   src="https://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<!-- 필요 라이브러리 끝-->
+	
+	<script type="text/javascript">
+		//db 데이터 저장 객체
+		var queryObject = "";
+		//db 데이터 저장 객체 객수 저장
+		var queryObjectLen = "";
+		
 
+		$.ajax({
+			type : 'GET',
+			url : 'http://localhost:8090/getData/SelectByCategory',
+			dataType : 'json',
+			success : function(data) {				 
+				queryObject = data;
+				//queryObjectLen = 4;
+			},
+			error : function(xhr, type) {
+				alert('server error occoured')
+			}
+		});//ajax 데이터 로드 끝
+
+		//구글 그래프 그리기 시작
+		google.load("visualization", "1", {
+			packages : [ "corechart" ]
+		});
+		google.setOnLoadCallback(drawChart);
+
+		const category = ["top","bottom","shoe","acc"];
+		function drawChart() {
+			var data = new google.visualization.DataTable();
+			// 칼럼 추가
+			data.addColumn('string', 'category');
+			data.addColumn('number', 'count');
+
+			// 설정된 칼럼에 대응하는 행 추가, 현재의 경우 TOP 3 이므로 3행이다.
+			console.log(queryObject);
+			data.addRows([ [ "top", queryObject.top ], ["bottom",queryObject.bottom]
+			,["shoe",queryObject.shoe],["accessaries",queryObject.acc]]);
+			
+
+			var options = {
+				title : '카테고리별 게시물 수',
+			};
+
+			var chart = new google.visualization.PieChart(document
+					.getElementById('chart_div'));
+
+			chart.draw(data, options);
+		}//drawChart() end 그래프 그리기 끝
+	</script>
+	<script type="text/javascript">
+		// ######################### 데이터 요청과 수신 시작
+		//db 데이터 저장 객체
+		var queryObject1 = "";
+		//db 데이터 저장 객체 객수 저장
+		var queryObjectLen = "";
+
+		$.ajax({
+			type : 'GET',
+			url : 'http://localhost:8090/getData/Top5_point',
+			dataType : 'json',
+			success : function(data) {
+				queryObject1 = eval('(' + JSON.stringify(data) + ')');
+				queryObjectLen = queryObject1.members.length;
+			},
+			error : function(xhr, type) {
+				alert('server error occoured')
+			}
+		});//ajax 데이터 로드 끝	
+		// ######################### 데이터 요청과 수신 끝
+		
+
+		// 구글 오픈 API에서 차트 객체 로드
+		google.charts.load('current', {
+			'packages' : [ 'bar' ]
+		});
+		// Google Visualization API  로드시 callback 사용할 콜백 함수 설정.
+		google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+			// 설정된 칼럼에 대응하는 행 추가, 현재의 경우 TOP 5 이므로 5행이다.
+			var arr1=['Top 5 rankers of m_point'];
+			var arr2=[' '];
+			
+			for (var i = 0; i < queryObjectLen; i++) {
+				var id = queryObject1.members[i].id;
+				var point = queryObject1.members[i].point;
+				
+				arr1.push(id);
+				arr2.push(point);
+			}
+			console.log(queryObject1);
+			
+			//1번째 행이 열이름 나머지는 데이터 배열 데이터 테이블
+			//csv나 R과의 연동을 위해
+			var data = google.visualization.arrayToDataTable([
+				arr1,
+				arr2 ]);
+
+			//차트 옵션 설정
+			var options = {
+				chart : {
+					title : 'Top5 rankers of m_point',
+				}
+			};
+
+			//차트 객체 생성
+			var chart = new google.charts.Bar(document
+					.getElementById('chart_div2'));
+			//파이 차트 그르기 데이터, 옵션
+			chart.draw(data, google.charts.Bar.convertOptions(options));
+		}
+	</script>
+	<!--pie chart_version 1_가 그려지기 위한 js 끝-->
+	
+	<!--bar chart가 실제로 그려질 부분 끝-->
 <!--   file where we handle all the script from the Gaia - Bootstrap Template   -->
 <script type="text/javascript" src="assets/js/gaia.js"></script>
-
 </html>

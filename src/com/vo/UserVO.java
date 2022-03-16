@@ -27,7 +27,7 @@ import lombok.ToString;
 public class UserVO {
   
    private String id,pw,name,email,phone,gender;
-    private int age,height,weight;
+    private int height,weight;
 
 
 }

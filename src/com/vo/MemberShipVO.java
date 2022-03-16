@@ -24,7 +24,7 @@ import lombok.ToString;
 @ToString
 public class MemberShipVO {
    private String id, grade;
-   private int post_count, point;
+   private int post_count, point, reply_count;
    
 
 }

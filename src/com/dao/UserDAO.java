@@ -47,7 +47,7 @@ public class UserDAO {
 
 		Connection conn = null;
 
-		String runSP = "{ call member_pack.member_insert(?, ?, ?, ?, ?, ?, ?, ?, ?) }";
+		String runSP = "{ call member_pack.member_insert(?, ?, ?, ?, ?, ?, ?, ?) }";
 
 		try {
 			conn = DBManager.getConnection();
@@ -58,10 +58,10 @@ public class UserDAO {
 			callableStatement.setString(3, userVO.getName());
 			callableStatement.setString(4, userVO.getEmail());
 			callableStatement.setString(5, userVO.getPhone());
-			callableStatement.setInt(6, userVO.getAge());
-			callableStatement.setString(7, userVO.getGender());
-			callableStatement.setInt(8, userVO.getHeight());
-			callableStatement.setInt(9, userVO.getWeight());
+			
+			callableStatement.setString(6, userVO.getGender());
+			callableStatement.setInt(7, userVO.getHeight());
+			callableStatement.setInt(8, userVO.getWeight());
 
 			callableStatement.executeUpdate();
 
@@ -87,7 +87,7 @@ public class UserDAO {
 
 		Connection conn = null;
 
-		String runSP = "{call member_pack.member_all_update(?,?,?,?,?,?,?,?,?)}";
+		String runSP = "{call member_pack.member_all_update(?,?,?,?,?,?,?,?)}";
 
 		try {
 			conn = DBManager.getConnection();
@@ -98,10 +98,10 @@ public class UserDAO {
 			callableStatement.setString(3, userVO.getName());
 			callableStatement.setString(4, userVO.getEmail());
 			callableStatement.setString(5, userVO.getPhone());
-			callableStatement.setInt(6, userVO.getAge());
-			callableStatement.setString(7, userVO.getGender());
-			callableStatement.setInt(8, userVO.getHeight());
-			callableStatement.setInt(9, userVO.getWeight());
+		
+			callableStatement.setString(6, userVO.getGender());
+			callableStatement.setInt(7, userVO.getHeight());
+			callableStatement.setInt(8, userVO.getWeight());
 
 			callableStatement.executeUpdate();
 
@@ -128,7 +128,7 @@ public class UserDAO {
 		UserVO userVO = new UserVO();
 		Connection conn = null;
 
-		String runSP = "{ call member_pack.member_select_pw_user_id(?, ?) }";
+		String runSP = "{ call member_pack.member_select_pw_member_id(?, ?) }";
 
 		try {
 			conn = DBManager.getConnection();
@@ -169,7 +169,7 @@ public class UserDAO {
 		UserVO userVO = null;
 		Connection conn = null;
 
-		String runSP = "{ call member_pack.member_select_all_user_id(?, ?) }";
+		String runSP = "{ call member_pack.member_select_all_member_id(?, ?) }";
 
 		try {
 			conn = DBManager.getConnection();
@@ -189,11 +189,10 @@ public class UserDAO {
 					userVO.setPw(resultSet.getString(2));
 					userVO.setName(resultSet.getString(3));
 					userVO.setEmail(resultSet.getString(4));
-					userVO.setPhone(resultSet.getString(5));
-					userVO.setAge(resultSet.getInt(6));
-					userVO.setGender(resultSet.getString(7));
-					userVO.setHeight(resultSet.getInt(8));
-					userVO.setWeight(resultSet.getInt(9));
+					userVO.setPhone(resultSet.getString(5));					
+					userVO.setGender(resultSet.getString(6));
+					userVO.setHeight(resultSet.getInt(7));
+					userVO.setWeight(resultSet.getInt(8));
 				}
 				conn.close();
 				callableStatement.close();
@@ -219,7 +218,7 @@ public class UserDAO {
 		Connection conn = DBManager.getConnection();
 		int count = 1;
 		try {
-			String query = "select count(*) as count from member where user_id=?";
+			String query = "select count(*) as count from member where member_id=?";
 			PreparedStatement pstmt = conn.prepareStatement(query);
 
 			pstmt.setString(1, id);

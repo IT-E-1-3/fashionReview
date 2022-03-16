@@ -51,7 +51,7 @@ public class ReplyDAO {
 			conn = dataFactory.getConnection();
 
 			pstmt = conn.prepareStatement(
-					"insert into reply (board_id,user_id,reply_id, content, reply_date) values(?,?,reply_count.nextval,?,sysdate)");
+					"insert into reply (board_id,member_id, content,reply_date) values(?,?,?,sysdate)");
 
 			pstmt.setString(1, reply.getBoard_id());
 			pstmt.setString(2, reply.getUser_id());
@@ -65,7 +65,7 @@ public class ReplyDAO {
 			}
 			if (conn != null) {
 				conn.close();
-				conn = null;
+				
 			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
@@ -94,12 +94,11 @@ public class ReplyDAO {
 
 			while (rs.next()) {
 				ReplyVO reply = new ReplyVO();
-				reply.setUser_id(rs.getString("user_id"));
+				reply.setUser_id(rs.getString("member_id"));
 				reply.setBoard_id(rs.getString("board_id"));
-				reply.setReply_id(rs.getString("reply_id"));
-				reply.setContent(rs.getString("content"));
 				reply.setReply_date(rs.getDate("reply_date"));
-
+				reply.setContent(rs.getString("content"));
+				
 				list.add(reply);
 			}
 			rs.close();
@@ -118,13 +117,14 @@ public class ReplyDAO {
 	    * @Method 설명 : Reply 패키지의 reply_delete 프로시저로 해당 댓글 삭제
 	    */
 
-	public void deleteReply(String reply_id) {
+	public void deleteReply(ReplyVO reply) {
 		try {
 			conn = dataFactory.getConnection();
-			String query = "delete from reply where reply_id=?";
+			String query = "delete from reply where board_id=? and member_id=?";
 			pstmt = conn.prepareStatement(query);
 
-			pstmt.setString(1, reply_id);
+			pstmt.setString(1, reply.getBoard_id());
+			pstmt.setString(2, reply.getUser_id());
 
 			pstmt.executeUpdate();
 
@@ -148,7 +148,7 @@ public class ReplyDAO {
 
 		try {
 			conn = dataFactory.getConnection();
-			String query = "SELECT count(*) as count from reply where user_id=?";
+			String query = "SELECT count(*) as count from reply where member_id=?";
 			pstmt = conn.prepareStatement(query);
 
 			pstmt.setString(1, user_id);

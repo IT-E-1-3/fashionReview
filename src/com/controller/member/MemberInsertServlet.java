@@ -47,7 +47,6 @@ public class MemberInsertServlet extends HttpServlet {
 		userVO.setEmail(request.getParameter("email"));
 		userVO.setPhone(request.getParameter("phone"));
 		userVO.setGender(request.getParameter("gender"));
-		userVO.setAge(Integer.parseInt(request.getParameter("age")));
 		userVO.setHeight(Integer.parseInt(request.getParameter("height")));
 		userVO.setWeight(Integer.parseInt(request.getParameter("weight")));
 
