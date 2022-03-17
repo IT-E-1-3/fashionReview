@@ -40,6 +40,9 @@ public class ReplyDeleteServlet extends HttpServlet {
 		String user_id = (String) request.getParameter("id");
 		String board_id = (String) request.getParameter("board_id");
 
+		//ReplyVO객체에 user_id와 board_id를 저장
+		reply.setUser_id(user_id);
+		reply.setBoard_id(board_id);
 		//ReplyDAO의 deleteReply를 통해 reply_id의 번호를 갖는 댓글 삭제
 		replyDAO.deleteReply(reply);
 

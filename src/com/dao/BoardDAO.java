@@ -1,5 +1,6 @@
 package com.dao;
 
+import java.sql.CallableStatement;
 /**
  * @file Name : BoardDAO.java
  * @project name : fashion_review
@@ -9,6 +10,7 @@ package com.dao;
  * @Method 설명 : 게시글 삽입, 삭제, 수정, 읽기에 대한 DB 프로시져를 실행하기 위한 기능을 전담하기 위한 Object
  */
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,8 +21,11 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.controller.DBmanager.DBManager;
 import com.vo.BoardVO;
 import com.vo.MemberShipVO;
+
+import oracle.jdbc.OracleTypes;
 
 public class BoardDAO {
 	private Connection conn;
@@ -47,29 +52,35 @@ public class BoardDAO {
 	 */
 
 	public ArrayList<BoardVO> selectAllBoard() {
+		String runSP = "{ call board_pack.board_select_all(?) }";
+		Connection conn = null;
 		ArrayList<BoardVO> list = new ArrayList<>();
+	
+			try {
 
-		try {
-			conn = dataFactory.getConnection();
-			String query = "SELECT * from board";
-			pstmt = conn.prepareStatement(query);
+				conn = DBManager.getConnection();
+				CallableStatement callableStatement = conn.prepareCall(runSP);
+				callableStatement.registerOutParameter(1, OracleTypes.CURSOR);
+				callableStatement.execute();
 
-			rs = pstmt.executeQuery();
+				ResultSet resultSet = (ResultSet) callableStatement.getObject(1);
 
-			while (rs.next()) {
-				BoardVO board = new BoardVO();
-				board.setUser_id(rs.getString("member_id"));
-				board.setBoard_id(rs.getString("board_id"));
-				board.setTitle(rs.getString("title"));
-				board.setContent(rs.getString("content"));
-				board.setPicture(rs.getString("picture"));
-				board.setWrite_date(rs.getDate("write_date"));
+				while (resultSet.next()) {
+					BoardVO board = new BoardVO();
+					board.setBoard_id(resultSet.getString("board_id"));
+					board.setUser_id(resultSet.getString("member_id"));
+					board.setTitle(resultSet.getString("title"));
+					board.setContent(resultSet.getString("content"));
+					board.setPicture(resultSet.getString("picture"));
+					board.setWrite_date(resultSet.getDate("write_date"));
+					board.setCategory(resultSet.getString("category"));
 
-				list.add(board);
-			}
+					list.add(board);
 
-			rs.close();
-			pstmt.close();
+				}
+
+			
+				callableStatement.close();
 			conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -93,7 +104,7 @@ public class BoardDAO {
 			boolean[] check = new boolean[500];
 			Arrays.fill(check, Boolean.FALSE);
 			for (String tmp : category) {
-				String query = "SELECT * from board where category like ?";
+				String query = "SELECT * from board where category like ? order by board_id desc";
 				pstmt = conn.prepareStatement(query);
 
 				pstmt.setString(1, '%' + tmp + '%');
@@ -103,7 +114,7 @@ public class BoardDAO {
 				while (rs.next()) {
 					BoardVO board1 = new BoardVO();
 					if (check[Integer.parseInt(rs.getString("board_id"))] == false) {
-						board1.setUser_id(rs.getString("user_id"));
+						board1.setUser_id(rs.getString("member_id"));
 						board1.setBoard_id(rs.getString("board_id"));
 						board1.setTitle(rs.getString("title"));
 						board1.setContent(rs.getString("content"));
@@ -132,28 +143,31 @@ public class BoardDAO {
 	 */
 
 	public void insertPost(BoardVO board) {
-		PreparedStatement pstmt = null;
+		System.out.println(board.toString());
+		Connection conn = null;
+		//                                             1  2  3  4  5
+		String runSP = "{ call board_pack.board_insert(?, ?, ?, ?, ?) }";
+
 		try {
-			conn = dataFactory.getConnection();
+			conn = DBManager.getConnection();
+			CallableStatement callableStatement = conn.prepareCall(runSP);
 
-			pstmt = conn.prepareStatement(
-					"insert into board (board_id,member_id, title, content, picture,category,write_date) values(board_count.nextval,?,?,?,?,?,sysdate)");
+			callableStatement.setString(1, board.getUser_id());
+			callableStatement.setString(2, board.getTitle());
+			callableStatement.setString(3, board.getContent());
+			callableStatement.setString(4, board.getPicture());
+			callableStatement.setString(5, board.getCategory());
 
-			pstmt.setString(1, board.getUser_id());
-			pstmt.setString(2, board.getTitle());
-			pstmt.setString(3, board.getContent());
-			pstmt.setString(4, board.getPicture());
-			pstmt.setString(5, board.getCategory());
-
-			pstmt.executeUpdate();
-
-			if (pstmt != null) {
-				pstmt.close();
-				pstmt = null;
+			callableStatement.executeUpdate();
+		
+			
+			if (callableStatement != null) {
+				callableStatement.close();
+				
 			}
 			if (conn != null) {
 				conn.close();
-				conn = null;
+				
 			}
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
@@ -171,36 +185,50 @@ public class BoardDAO {
 	 */
 
 	public BoardVO selectPost(String no) {
-		BoardVO board = new BoardVO();
+		BoardVO board = null;
+
+		Connection conn = null;
+
+		String runSP = "{ call board_pack.board_select_all_board_id(?, ?) }";
+
 		try {
-			conn = dataFactory.getConnection();
-			String query = "SELECT * from board where board_id=?";
-			pstmt = conn.prepareStatement(query);
 
-			pstmt.setString(1, no);
+			conn = DBManager.getConnection();
+			CallableStatement callableStatement = conn.prepareCall(runSP);
 
-			rs = pstmt.executeQuery();
+			callableStatement.setString(1, no);
+			callableStatement.registerOutParameter(2, OracleTypes.CURSOR);
 
-			while (rs.next()) {
+			try {
+				
+				callableStatement.execute();
 
-				board.setUser_id(rs.getString("member_id"));
-				board.setBoard_id(rs.getString("board_id"));
-				board.setTitle(rs.getString("title"));
-				board.setContent(rs.getString("content"));
-				board.setPicture(rs.getString("picture"));
-				board.setWrite_date(rs.getDate("write_date"));
-				board.setCategoryList(rs.getString("category").split(","));
+				ResultSet resultSet = (ResultSet) callableStatement.getObject(2);
 
+				board =  new BoardVO();
+				while (resultSet.next()) {
+
+					board.setUser_id(resultSet.getString("member_id"));
+					board.setBoard_id(resultSet.getString("board_id"));
+					board.setTitle(resultSet.getString("title"));
+					board.setContent(resultSet.getString("content"));
+					board.setPicture(resultSet.getString("picture"));
+					board.setWrite_date(resultSet.getDate("write_date"));
+					board.setCategory(resultSet.getString("category"));
+				}
+			resultSet.close();
+			callableStatement.close();
+			conn.close();
+			} catch (SQLException e) {
+				System.out.println("프로시저에서 에러 발생!");
+				System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
 			}
 
-			rs.close();
-			pstmt.close();
-			conn.close();
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return board;
-
 	}
 
 	/**
@@ -294,21 +322,27 @@ public class BoardDAO {
 
 	public void updatePost(BoardVO board) {
 
+		Connection conn = null;
+		
+		String runSP = "{call board_pack.board_all_update(?,?,?,?,?,?)}";
+
 		try {
-			conn = dataFactory.getConnection();
-			String query = "update board set title=?, content=?, write_date=sysdate , category=? where board_id=?";
-			pstmt = conn.prepareStatement(query);
+			conn=DBManager.getConnection();
+			CallableStatement callableStatement = conn.prepareCall(runSP);
 
-			pstmt.setString(1, board.getTitle());
-			pstmt.setString(2, board.getContent());
-			pstmt.setString(3, board.getCategory());
-			pstmt.setString(4, board.getBoard_id());
+			
+			callableStatement.setString(1, board.getBoard_id());
+			callableStatement.setString(2, board.getUser_id());
+			callableStatement.setString(3, board.getTitle());
+			callableStatement.setString(4, board.getContent());
+			callableStatement.setString(5, board.getPicture());			
+			callableStatement.setString(6, board.getCategory());
 
-			pstmt.executeUpdate();
+			callableStatement.executeUpdate();
 
-			pstmt.close();
-			conn.close();
+			System.out.println("업데이트 완료");
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -322,21 +356,24 @@ public class BoardDAO {
 	 *         지우기
 	 */
 
-	public void deletePost(String board_id) {
-		try {
-			conn = dataFactory.getConnection();
-			String query = "delete from board where board_id=?";
-			pstmt = conn.prepareStatement(query);
+	public void deletePost(String board_id, String user_id) {
+		Connection conn = null;
+		
+		String runSP = "{call board_pack.board_delete(?,?)}";
 
-			pstmt.setString(1, board_id);
+		try{
+			conn=DBManager.getConnection();
+			CallableStatement callableStatement = conn.prepareCall(runSP);
+		
+			callableStatement.setString(1, board_id);
+			callableStatement.setString(2, user_id);
+			callableStatement.executeUpdate();
 
-			pstmt.executeUpdate();
-
-			pstmt.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+			System.out.println("업데이트 완료");
+		}catch(Exception e){
+            e.printStackTrace();
+        }
+            
 	}
 
 	public int countPost(String user_id) {

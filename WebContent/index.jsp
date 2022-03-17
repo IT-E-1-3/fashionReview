@@ -212,6 +212,7 @@
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<!-- 필요 라이브러리 끝-->
 	
+	<!-- 김정휴 : 카테고리별 게시물 수, 멤버쉽 포인트 top5 구글차트로 표시 -->
 	<script type="text/javascript">
 		//db 데이터 저장 객체
 		var queryObject = "";

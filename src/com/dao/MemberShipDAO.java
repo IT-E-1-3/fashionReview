@@ -76,18 +76,22 @@ public class MemberShipDAO {
 
 				membershipVO = new MemberShipVO();
 				while (resultSet.next()) {
+					
 					String tId = resultSet.getString(1);
 					String tGrade = resultSet.getString(2);
 					int tPostCount = resultSet.getInt(3);
-					int tMPoint = resultSet.getInt(4);
+					int tMPoint = resultSet.getInt(5);
 
 					membershipVO.setId(tId);
 					membershipVO.setGrade(tGrade);
 					membershipVO.setPost_count(tPostCount);
+					membershipVO.setReply_count(resultSet.getInt(4));
 					membershipVO.setPoint(tMPoint);
 
+					
 					resultSet.close();
 					callableStatement.close();
+					conn.close();
 
 				}
 

@@ -1,5 +1,14 @@
 package com.controller.chart;
 
+/**
+ * @file Name : DataServlet.java
+ * @project name : fashion_review
+ * @package name : com.controller.charat
+ * @작성일 : 2022.03.16
+ * @작성자 : 김정휴
+ * @Method 설명 : 메인페이지의 차트 생성을 위한 데이터 전송 부분
+ */
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -84,7 +93,6 @@ public class DataServlet extends HttpServlet {
 				JSONObject totalObject = new JSONObject();
 				JSONArray membersArray = new JSONArray();
 
-
 				JSONObject countInfo = new JSONObject();
 					
 				countInfo.put("top", count[0]);
@@ -112,11 +120,6 @@ public class DataServlet extends HttpServlet {
 				JSONArray membersArray = new JSONArray();
 
 				for (int i = 0; i < rankers.size(); i++) {
-					System.out.println(rankers.get(i).getId());
-					System.out.println(rankers.get(i).getGrade());
-					System.out.println(rankers.get(i).getPost_count());
-					System.out.println(rankers.get(i).getReply_count());
-					System.out.println(rankers.get(i).getPoint());
 
 					JSONObject memberInfo = new JSONObject();
 					
@@ -132,7 +135,7 @@ public class DataServlet extends HttpServlet {
 				totalObject.put("members", membersArray);
 
 				String jsonInfo = totalObject.toJSONString();
-				System.out.print(jsonInfo);
+			
 				writer.print(jsonInfo);
 			}
 

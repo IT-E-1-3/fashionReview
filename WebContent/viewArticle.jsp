@@ -238,7 +238,10 @@ replyList = replyDAO.selectAllReply(request.getParameter("no"));
          <form action="deletePost" method="post">
          <!-- 게시글을 쓴 작성자의 id에 따라 가시성 유무 -->
             <input type='hidden' value="<%=board.getBoard_id()%>"
-               name="board_id"> <input type="submit" id="deleteBtn"
+               name="board_id"> 
+            <input type="hidden" value="<%=board.getUser_id()%>"
+               name="user_id">
+			<input type="submit" id="deleteBtn"
                class="btn btn-secondary" value="삭제">
          </form>
       </div>
