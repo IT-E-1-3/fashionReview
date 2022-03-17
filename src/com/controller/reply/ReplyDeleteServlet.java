@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 import com.dao.ReplyDAO;
+import com.vo.ReplyVO;
 
 /*
  * 댓글 삭제 서블릿
@@ -33,12 +34,17 @@ public class ReplyDeleteServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		//ReplyDAO 객체 생성
 		ReplyDAO replyDAO = new ReplyDAO();
+		//ReplyVO 객체 생성
+		ReplyVO reply = new ReplyVO();
 		//name="reply_id"인 항목과 board_id인 항목을 String변수에 저장
-		String reply_id = (String) request.getParameter("reply_id");
+		String user_id = (String) request.getParameter("id");
 		String board_id = (String) request.getParameter("board_id");
 
+		//ReplyVO객체에 user_id와 board_id를 저장
+		reply.setUser_id(user_id);
+		reply.setBoard_id(board_id);
 		//ReplyDAO의 deleteReply를 통해 reply_id의 번호를 갖는 댓글 삭제
-		replyDAO.deleteReply(reply_id);
+		replyDAO.deleteReply(reply);
 
 		//보고있던 페이지(viewArticle.jsp?no=게시물번호)로 redirect
 		response.sendRedirect("viewArticle.jsp?no=" + board_id);

@@ -25,7 +25,7 @@ import lombok.ToString;
 @ToString
 public class ReplyVO {
 	
-	private String user_id, board_id, reply_id, content;
+	private String user_id, board_id, content;
 	private Date reply_date;
 
 }

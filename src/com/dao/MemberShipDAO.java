@@ -55,86 +55,92 @@ public class MemberShipDAO {
     * @Method 설명 : MemberShip 패키지의 membership_select_all_member_id 프로시저로 해당 id에 대한 멤버십 정보 가져오기
     */
 
-   public MemberShipVO getMemberShipALL(String id) {
+	public MemberShipVO getMemberShipALL(String id) {
 
-      MemberShipVO membershipVO = null;
-      Connection conn = null;
+		MemberShipVO membershipVO = null;
+		Connection conn = null;
 
-      String runSP = "{ call membership_pack.membership_select_all_member_id(?, ?) }";
+		String runSP = "{ call membership_pack.membership_select_all_member_id(?, ?) }";
 
-      try {
-         conn = DBManager.getConnection();
-         CallableStatement callableStatement = conn.prepareCall(runSP);
+		try {
+			conn = DBManager.getConnection();
+			CallableStatement callableStatement = conn.prepareCall(runSP);
 
-         callableStatement.setString(1, id);
-         callableStatement.registerOutParameter(2, OracleTypes.CURSOR);
+			callableStatement.setString(1, id);
+			callableStatement.registerOutParameter(2, OracleTypes.CURSOR);
 
-         try {
-            callableStatement.execute();
+			try {
+				callableStatement.execute();
 
-            ResultSet resultSet = (ResultSet) callableStatement.getObject(2);
+				ResultSet resultSet = (ResultSet) callableStatement.getObject(2);
 
-            membershipVO= new MemberShipVO();
-            while (resultSet.next()) {
-               String tId = resultSet.getString(1);
-               String tGrade = resultSet.getString(2);
-               int tPostCount = resultSet.getInt(3);
-               int tMPoint = resultSet.getInt(4);
+				membershipVO = new MemberShipVO();
+				while (resultSet.next()) {
+					
+					String tId = resultSet.getString(1);
+					String tGrade = resultSet.getString(2);
+					int tPostCount = resultSet.getInt(3);
+					int tMPoint = resultSet.getInt(5);
 
-               membershipVO.setId(tId);
-               membershipVO.setGrade(tGrade);
-               membershipVO.setPost_count(tPostCount);
-               membershipVO.setPoint(tMPoint);
+					membershipVO.setId(tId);
+					membershipVO.setGrade(tGrade);
+					membershipVO.setPost_count(tPostCount);
+					membershipVO.setReply_count(resultSet.getInt(4));
+					membershipVO.setPoint(tMPoint);
 
-               System.out.println(membershipVO.toString());
-            }
+					
+					resultSet.close();
+					callableStatement.close();
+					conn.close();
 
-         } catch (SQLException e) {
-            System.out.println("프로시저에서 에러 발생!");
-            // System.err.format("SQL State: %s", e.getSQLState());
-            System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
-         }
-      } catch (Exception e) {
-         e.printStackTrace();
-      } finally {
-//         DBManager.close(conn, callableStatement);
-      }
-      return membershipVO;
-   }
-   
-   // TOP 3 view
-//   public ArrayList<MemberShipVO> selectTopPostRankers() {
-//      ArrayList<MemberShipVO> rankerList = new ArrayList<MemberShipVO>();
-//      try {
-//
-//         // sql --> table --> view
-//         String query = "SELECT * from v_1";
-//         System.out.println(query);
-//         // DHCP
-//         conn = DBManager.getConnection();
-//         pstmt = conn.prepareStatement(query);
-//         ResultSet rs = pstmt.executeQuery();
-//         
-//         while (rs.next()) {
-//            String user_id = rs.getString("c_1");
-//            String grade = rs.getString("c_2");
-//            int post_count = rs.getInt("c_3");
-//            int m_point = rs.getInt("c_4");
-//            
-//            MemberShipVO ranker = new MemberShipVO();
-//            ranker.setId(user_id);
-//            ranker.setGrade(grade);
-//            ranker.setPost_count(post_count);
-//            ranker.setPoint(m_point);
-//
-//            rankerList.add(ranker);
-//         } // end while
-//         rs.close();
-//         pstmt.close();
-//         conn.close();
-//      } catch (Exception e) {
-//         e.printStackTrace();
-//      } // end try
-//      return rankerList;
-//   }// end
+				}
+
+			} catch (SQLException e) {
+				System.out.println("프로시저에서 에러 발생!");
+				// System.err.format("SQL State: %s", e.getSQLState());
+				System.err.format("SQL State: %s\n%s", e.getSQLState(), e.getMessage());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return membershipVO;
+	}
+
+	// TOP 5 of m_point view
+	   public ArrayList<MemberShipVO> selectRankers() {
+	      ArrayList<MemberShipVO> rankerList = new ArrayList<MemberShipVO>();
+	      try {
+
+	         // sql --> table --> view
+	         String query = "SELECT * from v_2";
+	         System.out.println(query);
+	         // DHCP
+	         conn = DBManager.getConnection();
+	         pstmt = conn.prepareStatement(query);
+	         ResultSet rs = pstmt.executeQuery();
+	         
+	         while (rs.next()) {
+	            String user_id = rs.getString("c_1");
+	            String grade = rs.getString("c_2");
+	            int post_count = rs.getInt("c_3");
+	            int reply_count = rs.getInt("c_4");
+	            int point = rs.getInt("c_5");
+	            
+	            MemberShipVO ranker = new MemberShipVO();
+	            ranker.setId(user_id);
+	            ranker.setGrade(grade);
+	            ranker.setPost_count(post_count);
+	            ranker.setReply_count(reply_count);
+	            ranker.setPoint(point);
+
+	            rankerList.add(ranker);
+	         } // end while
+	         rs.close();
+	         pstmt.close();
+	         conn.close();
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      } // end try
+	      return rankerList;
+	   }// end
 }

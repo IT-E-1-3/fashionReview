@@ -135,7 +135,10 @@ replyList = replyDAO.selectAllReply(request.getParameter("no"));
          $("#title").attr("readonly",false);
          $("#content").attr("readonly",false);
       }
+  
+   	   
 
+      
    });
 </script>
 
@@ -162,7 +165,7 @@ replyList = replyDAO.selectAllReply(request.getParameter("no"));
          <br> <br>
       <!-- 수정 버튼을 누를시 BoardUpdateServlet으로 post 매핑 -->
          <form action="updatePost" method="post"
-            onsubmit="return chkchk(this);">
+            onsubmit="return check(this);">
             <table class="table table-striped"
                style="text-align: center; border: 1px solid #dddddd">
                <!-- 게시글의 아이디, 제목, 내용, 첨부파일 값 boardDAO에서 불러오기 -->
@@ -200,25 +203,26 @@ replyList = replyDAO.selectAllReply(request.getParameter("no"));
                         type="checkbox" name="category" value="bottom"> 하의</label> <label><input
                         type="checkbox" name="category" value="shoes"> 신발</label> <label><input
                         type="checkbox" name="category" value="Accessories">
-                        악세사리</label> <script type="text/javascript">
-                           // 체크박스 체크 validate (체크박스 유효성 검증)
-
-                           function check(form) {
-                              var arr_form = document
-                                    .getElementsByName('category');
-                              var num = 0;
-                              for (var i = 0; i < arr_form.length; i++) {
-                                 if (arr_form[i].checked) {
-                                    num++;
-                                 }
-                              }
-                              //카테고리 선택 필수 처리
-                              if (!num) {
-                                 alert('카테고리를 하나 이상 선택해주시기 바랍니다');
-                                 return false;
-                              }
-                           }
-                        </script></td>
+                        악세사리</label> 
+                        <script type="text/javascript">
+                        //카테고리 체크박스 체크 validate (체크박스 유효성 검증)
+                        function check(form) {
+                            var arr_form = document.getElementsByName('category');                             
+                            
+                            var num = 0;
+                       
+                            for (var i = 0; i < arr_form.length; i++) {                            	
+                               if (arr_form[i].checked) {
+                                  num++;                                  
+                               }
+                            }
+                            //카테고리 선택 필수 처리
+                            if (!num) {
+                               alert('카테고리를 하나 이상 선택해주시기 바랍니다');
+                               return false;
+                            }
+                         }
+                        </script>
                </tr>
             </table>
             <input type='hidden' value="<%=board.getBoard_id()%>"
@@ -234,7 +238,10 @@ replyList = replyDAO.selectAllReply(request.getParameter("no"));
          <form action="deletePost" method="post">
          <!-- 게시글을 쓴 작성자의 id에 따라 가시성 유무 -->
             <input type='hidden' value="<%=board.getBoard_id()%>"
-               name="board_id"> <input type="submit" id="deleteBtn"
+               name="board_id"> 
+            <input type="hidden" value="<%=board.getUser_id()%>"
+               name="user_id">
+			<input type="submit" id="deleteBtn"
                class="btn btn-secondary" value="삭제">
          </form>
       </div>
@@ -289,9 +296,8 @@ replyList = replyDAO.selectAllReply(request.getParameter("no"));
          <!-- 삭제 버튼 누를시 ReplyDeleteServlet으로 post 매핑 -->
          <form action="deleteComment" method="post">
             <tr>
-               <input type="hidden" name="reply_id" value="<%=reply.getReply_id()%>">
+               <input type="hidden" name="id" value="<%=reply.getUser_id()%>">
                <input type="hidden" name="board_id" value="<%=board.getBoard_id()%>">
-               <input type="hidden" value="<%=reply.getUser_id()%>" readonly>
                <td><%=reply.getUser_id()%></td>
                <td><%=reply.getContent()%></td>
                <td><%=reply.getReply_date()%></td>

@@ -8,10 +8,10 @@
    //Membership 정보를 받아오기 위함
    MemberShipVO m =  new MemberShipVO();
    MemberShipDAO  membershipDAO = MemberShipDAO.getInstance();
-   m = membershipDAO.getMemberShipALL(id);   
+   m = membershipDAO.getMemberShipALL(id);  
+   System.out.println(m.toString());
 
-   MemberShipVO membership = new MemberShipVO();
-   membership = membershipDAO.getMemberShipALL(id);
+
    //댓글 갯수를 받아오기 위함
    ReplyVO reply=new ReplyVO();
    ReplyDAO replyDAO=new ReplyDAO();
@@ -20,9 +20,7 @@
    BoardVO board=new BoardVO();
    BoardDAO boardDAO=new BoardDAO();
    int post_count=boardDAO.countPost(id);
-   //랭킹 top3를 받아오기 위함
-   //ArrayList<MemberShipVO> rankers = new ArrayList<MemberShipVO>();
-   //rankers = membershipDAO.selectTopPostRankers();
+
 
 
 %>

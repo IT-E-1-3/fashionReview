@@ -1,17 +1,22 @@
 package com.dao;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import com.controller.DBmanager.DBManager;
 import com.vo.BoardVO;
 import com.vo.ReplyVO;
+
+import oracle.jdbc.OracleTypes;
 
 /**
  * @file Name : ReplyDAO.java
@@ -45,34 +50,33 @@ public class ReplyDAO {
 	    * @Method 설명 : Reply 패키지의 reply_insert 프로시저로 게시글에 댓글 추가
 	    */
 
-	public void insertReply(ReplyVO reply) {
-		PreparedStatement pstmt = null;
-		try {
-			conn = dataFactory.getConnection();
+	 public void insertReply(ReplyVO replyVO) {
+	      
 
-			pstmt = conn.prepareStatement(
-					"insert into reply (board_id,user_id,reply_id, content, reply_date) values(?,?,reply_count.nextval,?,sysdate)");
+	      Connection conn = null;
 
-			pstmt.setString(1, reply.getBoard_id());
-			pstmt.setString(2, reply.getUser_id());
-			pstmt.setString(3, reply.getContent());
+	      String runSP = "{ call reply_pack.reply_insert(?, ?, ?, sysdate) }";
+	      try {
+	         conn = DBManager.getConnection();
+	         CallableStatement callableStatement = conn.prepareCall(runSP);
 
-			pstmt.executeUpdate();
+	         callableStatement.setString(1, replyVO.getBoard_id());
+	         callableStatement.setString(2, replyVO.getUser_id());
+	         callableStatement.setString(3, replyVO.getContent());
+	         
 
-			if (pstmt != null) {
-				pstmt.close();
-				pstmt = null;
-			}
-			if (conn != null) {
-				conn.close();
-				conn = null;
-			}
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	         callableStatement.executeUpdate();
+	                
+	         conn.close();
+	         callableStatement.close();
+	         
+
+	      } catch (SQLException sqle) {
+	         sqle.printStackTrace();
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	      }
+	   }
 	
 	   /**
 	    * @Method Name : selectAllReply
@@ -82,34 +86,41 @@ public class ReplyDAO {
 	    */
 
 	public ArrayList<ReplyVO> selectAllReply(String board_id) {
-		ArrayList<ReplyVO> list = new ArrayList<>();
+	      ArrayList<ReplyVO> list = new ArrayList<>();
+	      Connection conn = null;
+	      
+	      String runSP = "{call reply_pack.reply_select_all_board_id(?,?)}";
+	      
 
-		try {
-			conn = dataFactory.getConnection();
-			String query = "SELECT * from reply where board_id=?";
-			pstmt = conn.prepareStatement(query);
+	      try {
+	         conn = DBManager.getConnection();
+	         CallableStatement callableStatement = conn.prepareCall(runSP);
 
-			pstmt.setString(1, board_id);
-			rs = pstmt.executeQuery();
+	         callableStatement.setString(1, board_id);
+	         callableStatement.registerOutParameter(2, OracleTypes.CURSOR);
 
-			while (rs.next()) {
-				ReplyVO reply = new ReplyVO();
-				reply.setUser_id(rs.getString("user_id"));
-				reply.setBoard_id(rs.getString("board_id"));
-				reply.setReply_id(rs.getString("reply_id"));
-				reply.setContent(rs.getString("content"));
-				reply.setReply_date(rs.getDate("reply_date"));
+	         callableStatement.execute();
 
-				list.add(reply);
-			}
-			rs.close();
-			pstmt.close();
-			conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return list;
-	}
+	         ResultSet resultSet = (ResultSet) callableStatement.getObject(2);
+
+	         while (resultSet.next()) {
+	            ReplyVO reply = new ReplyVO();
+	            
+	            reply.setBoard_id(resultSet.getString(1));
+	            reply.setUser_id(resultSet.getString(2));
+	            reply.setContent(resultSet.getString(3));
+	            reply.setReply_date(resultSet.getDate(4));
+	            
+	            list.add(reply);
+	         }
+	         resultSet.close();
+	         callableStatement.close();
+	         conn.close();
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      }
+	      return list;
+	   }
 
 	 /**
 	    * @Method Name : deleteReply
@@ -118,18 +129,20 @@ public class ReplyDAO {
 	    * @Method 설명 : Reply 패키지의 reply_delete 프로시저로 해당 댓글 삭제
 	    */
 
-	public void deleteReply(String reply_id) {
+	public void deleteReply(ReplyVO reply) {
 		try {
-			conn = dataFactory.getConnection();
-			String query = "delete from reply where reply_id=?";
+			conn = DBManager.getConnection();
+			String query = "delete from reply where board_id=? and member_id=?";
 			pstmt = conn.prepareStatement(query);
 
-			pstmt.setString(1, reply_id);
+			pstmt.setString(1, reply.getBoard_id());
+			pstmt.setString(2, reply.getUser_id());
 
 			pstmt.executeUpdate();
 
 			pstmt.close();
 			conn.close();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -147,8 +160,8 @@ public class ReplyDAO {
 		int count = 0;
 
 		try {
-			conn = dataFactory.getConnection();
-			String query = "SELECT count(*) as count from reply where user_id=?";
+			conn = DBManager.getConnection();
+			String query = "SELECT count(*) as count from reply where member_id=?";
 			pstmt = conn.prepareStatement(query);
 
 			pstmt.setString(1, user_id);

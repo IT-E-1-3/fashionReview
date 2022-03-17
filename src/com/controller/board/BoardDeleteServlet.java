@@ -36,10 +36,11 @@ public class BoardDeleteServlet extends HttpServlet {
 		
 		//name='board_id'인 항목의 parameter값 받아옴
 		String board_id = request.getParameter("board_id");
+		String user_id = request.getParameter("user_id");
 		//BoardDAO 객체 생성
 		BoardDAO boardDAO = new BoardDAO();
 		//BoardDAO의 deletePost메소드 실행
-		boardDAO.deletePost(board_id);
+		boardDAO.deletePost(board_id,user_id);
 
 		//boardList.jsp로 포워딩
 		RequestDispatcher dispatcher = request.getRequestDispatcher("boardList.jsp");
